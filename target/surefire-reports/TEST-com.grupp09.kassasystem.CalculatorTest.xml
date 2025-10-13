@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.grupp09.kassasystem.CalculatorTest" time="0.067" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.grupp09.kassasystem.CalculatorTest" time="0.098" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -12,7 +12,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/home/pst/Downloads/jdk-21.0.6+7/lib"/>
-    <property name="sun.java.command" value="/home/pst/IdeaProjects/INTE/INTE_Kassasystem-Grupp09/target/surefire/surefirebooter4742603771986258158.jar /home/pst/IdeaProjects/INTE/INTE_Kassasystem-Grupp09/target/surefire 2025-10-13T22-16-17_726-jvmRun1 surefire242915852663343907tmp surefire_06236361643166410390tmp"/>
+    <property name="sun.java.command" value="/home/pst/IdeaProjects/INTE/INTE_Kassasystem-Grupp09/target/surefire/surefirebooter12270780254509059358.jar /home/pst/IdeaProjects/INTE/INTE_Kassasystem-Grupp09/target/surefire 2025-10-13T22-45-45_045-jvmRun1 surefire9669386167296122432tmp surefire_02187151129845025467tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/home/pst/IdeaProjects/INTE/INTE_Kassasystem-Grupp09/target/test-classes:/home/pst/IdeaProjects/INTE/INTE_Kassasystem-Grupp09/target/classes:/home/pst/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.11.0-M2/junit-jupiter-engine-5.11.0-M2.jar:/home/pst/.m2/repository/org/junit/platform/junit-platform-engine/1.11.0-M2/junit-platform-engine-1.11.0-M2.jar:/home/pst/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/home/pst/.m2/repository/org/junit/platform/junit-platform-commons/1.11.0-M2/junit-platform-commons-1.11.0-M2.jar:/home/pst/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.11.0-M2/junit-jupiter-api-5.11.0-M2.jar:/home/pst/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/pst/.m2/repository/org/junit/platform/junit-platform-runner/1.11.0-M2/junit-platform-runner-1.11.0-M2.jar:/home/pst/.m2/repository/junit/junit/4.13.2/junit-4.13.2.jar:/home/pst/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/pst/.m2/repository/org/junit/platform/junit-platform-launcher/1.11.0-M2/junit-platform-launcher-1.11.0-M2.jar:/home/pst/.m2/repository/org/junit/platform/junit-platform-suite-api/1.11.0-M2/junit-platform-suite-api-1.11.0-M2.jar:/home/pst/.m2/repository/org/junit/platform/junit-platform-suite-commons/1.11.0-M2/junit-platform-suite-commons-1.11.0-M2.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -27,7 +27,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
-    <property name="surefire.real.class.path" value="/home/pst/IdeaProjects/INTE/INTE_Kassasystem-Grupp09/target/surefire/surefirebooter4742603771986258158.jar"/>
+    <property name="surefire.real.class.path" value="/home/pst/IdeaProjects/INTE/INTE_Kassasystem-Grupp09/target/surefire/surefirebooter12270780254509059358.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.6+7-LTS"/>
     <property name="user.name" value="pst"/>
@@ -54,5 +54,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="add_TwoNumbers_GivesCorrectResult" classname="com.grupp09.kassasystem.CalculatorTest" time="0.046"/>
+  <testcase name="add_TwoNumbers_GivesCorrectResult" classname="com.grupp09.kassasystem.CalculatorTest" time="0.053"/>
 </testsuite>
