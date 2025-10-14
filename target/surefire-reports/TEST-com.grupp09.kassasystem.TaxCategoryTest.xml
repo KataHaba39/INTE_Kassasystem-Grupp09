@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.grupp09.kassasystem.CalculatorTest" time="0.029" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.grupp09.kassasystem.TaxCategoryTest" time="0.03" tests="2" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,8 +15,9 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Eclipse Adoptium\jdk-21.0.4.7-hotspot\bin"/>
-    <property name="sun.java.command" value="C:\Users\enesi\AppData\Local\Temp\surefire17194266924714427401\surefirebooter4904431283912038901.jar C:\Users\enesi\AppData\Local\Temp\surefire17194266924714427401 2025-10-14T19-15-02_045-jvmRun1 surefire13765874939889570794tmp surefire_013318329090271971103tmp"/>
+    <property name="sun.java.command" value="C:\Users\enesi\AppData\Local\Temp\surefire7709622428672720196\surefirebooter4598003305316541673.jar C:\Users\enesi\AppData\Local\Temp\surefire7709622428672720196 2025-10-14T19-23-57_211-jvmRun1 surefire433240898270313851tmp surefire_08569586659009346995tmp"/>
     <property name="jdk.debug" value="release"/>
+    <property name="test" value="TaxCategoryTest"/>
     <property name="surefire.test.class.path" value="C:\Users\enesi\Desktop\INTE_Kassasystem-Grupp09\target\test-classes;C:\Users\enesi\Desktop\INTE_Kassasystem-Grupp09\target\classes;C:\Users\enesi\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.11.0-M2\junit-jupiter-engine-5.11.0-M2.jar;C:\Users\enesi\.m2\repository\org\junit\platform\junit-platform-engine\1.11.0-M2\junit-platform-engine-1.11.0-M2.jar;C:\Users\enesi\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\enesi\.m2\repository\org\junit\platform\junit-platform-commons\1.11.0-M2\junit-platform-commons-1.11.0-M2.jar;C:\Users\enesi\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.11.0-M2\junit-jupiter-api-5.11.0-M2.jar;C:\Users\enesi\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\enesi\.m2\repository\org\junit\platform\junit-platform-runner\1.11.0-M2\junit-platform-runner-1.11.0-M2.jar;C:\Users\enesi\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar;C:\Users\enesi\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\enesi\.m2\repository\org\junit\platform\junit-platform-launcher\1.11.0-M2\junit-platform-launcher-1.11.0-M2.jar;C:\Users\enesi\.m2\repository\org\junit\platform\junit-platform-suite-api\1.11.0-M2\junit-platform-suite-api-1.11.0-M2.jar;C:\Users\enesi\.m2\repository\org\junit\platform\junit-platform-suite-commons\1.11.0-M2\junit-platform-suite-commons-1.11.0-M2.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\enesi"/>
@@ -30,7 +31,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\enesi\AppData\Local\Temp\surefire17194266924714427401\surefirebooter4904431283912038901.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\enesi\AppData\Local\Temp\surefire7709622428672720196\surefirebooter4598003305316541673.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.4+7-LTS"/>
@@ -48,6 +49,7 @@
     <property name="java.version" value="21.0.4"/>
     <property name="user.dir" value="C:\Users\enesi\Desktop\INTE_Kassasystem-Grupp09"/>
     <property name="os.arch" value="amd64"/>
+    <property name="surefire.redirectTestOutputToFile" value="false"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="sun.os.patch.level" value=""/>
     <property name="native.encoding" value="Cp1252"/>
@@ -59,5 +61,6 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="add_TwoNumbers_GivesCorrectResult" classname="com.grupp09.kassasystem.CalculatorTest" time="0.019"/>
+  <testcase name="testingCategoryIdForItemGroups" classname="com.grupp09.kassasystem.TaxCategoryTest" time="0.02"/>
+  <testcase name="testingVatBpsForItemGroups" classname="com.grupp09.kassasystem.TaxCategoryTest" time="0.001"/>
 </testsuite>
