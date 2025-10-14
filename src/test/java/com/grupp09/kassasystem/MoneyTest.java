@@ -7,6 +7,6 @@ public class MoneyTest {
     @Test
     void money_class_sets_attributes(){
         Money money = new Money();
-        assertEquals(0.0d, money.getValue());
+        assertEquals(0.0d, money.getMoney());
     }
 }
