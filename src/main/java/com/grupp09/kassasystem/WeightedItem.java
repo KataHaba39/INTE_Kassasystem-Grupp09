@@ -1,12 +1,12 @@
 package com.grupp09.kassasystem;
 
-public class WeightedItem {
+public class WeightedItem implements Item {
     private final String itemName;
-    private final double pricePerUnit;
+    private final Money pricePerUnit;
     private final WeightUnit weightUnit;
     private final ItemGroups itemGroup;
 
-    public WeightedItem(String itemName, double pricePerUnit, WeightUnit weightUnit, ItemGroups itemGroup) {
+    public WeightedItem(String itemName, Money pricePerUnit, WeightUnit weightUnit, ItemGroups itemGroup) {
         this.itemName = itemName;
         this.pricePerUnit = pricePerUnit;
         if (weightUnit == null)  throw new NullPointerException("Weight unit is required!");
@@ -18,24 +18,28 @@ public class WeightedItem {
         return itemName;
     }
 
-    public double getPricePerUnit() {
-        return pricePerUnit;
-    }
-
     public WeightUnit getWeightUnit() {
         return weightUnit;
     }
 
+    @Override
+    public Money getPricePerUnit() {
+        return pricePerUnit;
+    }
+
+    @Override
+    public Money getTotalPrice(double amount, WeightUnit unit) {   //detta beror på hur Money är
+        if (unit == null) throw new NullPointerException("Weight unit is required!");
+
+        double pricePerGram = pricePerUnit.getValue()/ weightUnit.gramsPerUnit();
+        double grams = unit.toGrams(amount);
+        double raw = grams * pricePerGram;
+        return new Money(Math.round(raw * 100.0) / 100.0);     // denna beror på hur Money ser ut, vet inte än
+    }
+
+    @Override
     public ItemGroups getItemGroup() {
         return itemGroup;
     }
 
-    public double totalPrice(double amount, WeightUnit unit) {
-        if (unit == null) throw new NullPointerException("Weight unit is required!");
-        
-        double pricePerGram = pricePerUnit / weightUnit.gramsPerUnit();
-        double grams = unit.toGrams(amount); 
-        double raw = grams * pricePerGram;
-        return Math.round(raw * 100.0) / 100.0;
-    }
 }
