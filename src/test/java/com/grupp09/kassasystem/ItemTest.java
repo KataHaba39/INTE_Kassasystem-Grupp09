@@ -18,7 +18,7 @@ class ItemTest {
     void item_has_group_and_price(){
         Item bröd = new Item("Bröd", 5.0, ItemGroups.BROD);
         assertEquals(ItemGroups.BROD, bröd.getItemGroup());
-        assertEquals(5.0, bröd.getPrice());
+        assertEquals(5.0, bröd.getPricePerUnit());
         System.out.println("Item group: " + bröd.getItemGroup() + ", Price: " + bröd.getPrice());
     }
 }
