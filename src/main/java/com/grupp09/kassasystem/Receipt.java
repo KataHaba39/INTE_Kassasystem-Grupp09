@@ -18,13 +18,13 @@ public class Receipt {
     }
 
     public Money calculateTotal() {
-        double total = 0;
+        Money total = new Money(0);
 
         for (ReceiptItem ri: items) {
-            total = total + ri.getSubtotal().getValue(); // beror på Money
+            total.add(ri.getSubTotal());
         }
 
-        return new Money(total);
+        return total;
     }
 
     public void printReceipt(){}
