@@ -17,8 +17,8 @@ public class FixedPriceItem implements Item {
     }
 
     @Override
-    public Money getTotalPrice(double quantity, WeightUnit unit) { //kan ändras, tar just nu null, mer för att kunna ha polymorfism
-        return new Money(quantity * price.getValue());   //detta beror på hur money klassen ser ut
+    public Money getTotalPrice(double quantity, WeightUnit unit) {//kan ändras, tar just nu null, mer för att kunna ha polymorfism
+        return price.multiply(quantity);
     }
 
     @Override

@@ -31,10 +31,12 @@ public class WeightedItem implements Item {
     public Money getTotalPrice(double amount, WeightUnit unit) {   //detta beror på hur Money är
         if (unit == null) throw new NullPointerException("Weight unit is required!");
 
-        double pricePerGram = pricePerUnit.getValue()/ weightUnit.gramsPerUnit();
+        double pricePerGram = pricePerUnit.getValueAsDouble()/ weightUnit.gramsPerUnit();
         double grams = unit.toGrams(amount);
-        double raw = grams * pricePerGram;
-        return new Money(Math.round(raw * 100.0) / 100.0);     // denna beror på hur Money ser ut, vet inte än
+
+        Money raw = new Money(pricePerGram).multiply(grams); // vad är det som menas med raw? ursprungliga kodraden var double raw = grams * pricePerGram;
+
+        return raw;
     }
 
     @Override
