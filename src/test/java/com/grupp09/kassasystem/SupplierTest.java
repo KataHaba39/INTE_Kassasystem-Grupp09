@@ -2,7 +2,7 @@ package com.grupp09.kassasystem;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Set;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -128,7 +128,7 @@ class SupplierTest {
         i.setSupplier(s);
         s.addItem(i);
 
-        Set<Item> items = s.getItems();
+        List<Item> items = s.getItems();
         assertThrows(UnsupportedOperationException.class, () -> items.add(i));
         assertThrows(UnsupportedOperationException.class, () -> items.remove(i));
     }

@@ -8,15 +8,15 @@ package com.grupp09.kassasystem;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+import java.util.Iterator;
 
-public class Supplier {
+public class Supplier implements Iterable<Item> {
     private final String supplierId;
     private final String name;
     private final String contactInfo;
     private boolean active;
-    private Set<Item> items;
+    private final List<Item> items;
 
     public Supplier(String supplierId, String name, String contactInfo) {
         if(supplierId == null || supplierId.trim().isEmpty()) {
@@ -31,7 +31,7 @@ public class Supplier {
         this.name = name;
         this.contactInfo = contactInfo;
         this.active = true;
-        items = new HashSet<>();
+        this.items = new ArrayList<>();
     }
 
     public String getSupplierId() {
@@ -63,6 +63,10 @@ public class Supplier {
             return false;
         }
 
+        if(items.contains(item)) {
+            return false;
+        }
+
         return items.add(item);
     }
 
@@ -76,7 +80,12 @@ public class Supplier {
         return items.remove(item);
     }
 
-    public Set<Item> getItems() {
-        return Collections.unmodifiableSet(items);
+    public List<Item> getItems() {
+        return Collections.unmodifiableList(items);
+    }
+
+    @Override
+    public Iterator<Item> iterator() {
+        return items.iterator();
     }
 }
