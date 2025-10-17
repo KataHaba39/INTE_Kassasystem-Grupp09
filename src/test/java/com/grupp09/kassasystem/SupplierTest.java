@@ -10,7 +10,7 @@ class SupplierTest {
 
     @Test
     void testSupplierCreatedCorrectly() {
-        Supplier s = new Supplier("S001", "Arla", "konakt@arla.se");
+        Supplier s = new Supplier("S001", "Arla", "kontakt@arla.se");
 
         assertEquals("S001", s.getSupplierId());
         assertEquals("Arla", s.getName());
@@ -34,7 +34,7 @@ class SupplierTest {
         Exception e = assertThrows(IllegalArgumentException.class, () -> {
             new Supplier("", "Arla", "kontakt@arla.se");
         });
-        assertEquals("Leverantörs ID kan ej vara tom", e.getMessage());
+        assertEquals("Leverantörs ID får ej vara tom", e.getMessage());
     }
 
     @Test
@@ -42,7 +42,7 @@ class SupplierTest {
         Exception e = assertThrows(IllegalArgumentException.class, () -> {
             new Supplier("S003", "  ", "kontakt@arla.se");
         });
-        assertEquals("Leverantörs namn kan ej vara tom", e.getMessage());
+        assertEquals("Leverantörers namn får ej vara tom", e.getMessage());
     }
 
     @Test
