@@ -3,7 +3,7 @@ package com.grupp09.kassasystem;
 public class ReceiptItem {
     private final Item item;
     private final double quantity;
-    private final WeighUnit unit;
+    private final WeightUnit unit;
 
     public ReceiptItem(Item item, double quantity, WeightUnit unit) {
         this.item = item;

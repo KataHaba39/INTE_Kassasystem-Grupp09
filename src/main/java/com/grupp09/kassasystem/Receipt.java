@@ -10,15 +10,12 @@ public class Receipt {
         items.add(new ReceiptItem(item, quantity, unit));
     }
 
-    public Item removeItem(Item item) {
-        if (!items.contains(item)) {
-            return null;
-        }
+    public boolean removeItem(Item item) {
         return items.remove(item);
     }
 
     public Money calculateTotal() {
-        Money total = new Money(0);
+        Money total = Money.toMoney(0.0);
 
         for (ReceiptItem ri: items) {
             total.add(ri.getSubTotal());
