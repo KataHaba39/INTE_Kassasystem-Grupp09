@@ -3,6 +3,8 @@ package com.grupp09.kassasystem;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+//Ev. också override HashCode
+
 public class Money {
     private final static String CURRENCY = "SEK";
     private final BigDecimal value;
@@ -47,4 +49,29 @@ public class Money {
     public String toString() {
         return value + " " + CURRENCY;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Money)) {
+            return false;
+        }
+
+        Money other = (Money) obj;
+
+        return this.value.compareTo(other.value) == 0 &&
+                this.getCurrency().equals(other.getCurrency());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = value.stripTrailingZeros().hashCode();
+        result = 31 * result + CURRENCY.hashCode();
+        return result;
+    }
+
 }

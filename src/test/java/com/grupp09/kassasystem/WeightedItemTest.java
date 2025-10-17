@@ -60,4 +60,49 @@ class WeightedItemTest {
         assertThrows(NullPointerException.class,
                 () -> new WeightedItem("Apple", pricePerKg, null, ItemGroups.FRUKT_GRONT));
     }
+
+    @Test
+    void setSupplier_WhenNoSupplierAssigned_ShouldReturnTrue() {
+        Supplier s = new Supplier("S001", "Axfood", "info@axfood.se");
+        assertTrue(item.setSupplier(s));
+        assertEquals(s, item.getSupplier());
+    }
+
+    @Test
+    void setSupplier_WhenSupplierAlreadyAssigned_ShouldReturnFalse() {
+        Supplier s1 = new Supplier("S001", "Axfood", "info@axfood.se");
+        Supplier s2 = new Supplier("S002", "Coop", "contact@coop.se");
+
+        item.setSupplier(s1);
+        assertFalse(item.setSupplier(s2));
+        assertEquals(s1, item.getSupplier());
+    }
+
+    @Test
+    void removeSupplier_WhenSupplierAssigned_ShouldReturnTrue() {
+        Supplier s = new Supplier("S001", "Axfood", "info@axfood.se");
+        item.setSupplier(s);
+
+        assertTrue(item.removeSupplier());
+        assertNull(item.getSupplier());
+    }
+
+    @Test
+    void removeSupplier_WhenNoSupplierAssigned_ShouldReturnFalse() {
+        assertFalse(item.removeSupplier());
+        assertNull(item.getSupplier());
+    }
+
+    @Test
+    void getSupplier_WhenSupplierAssigned_ShouldReturnCorrectSupplier() {
+        Supplier s = new Supplier("S001", "Axfood", "info@axfood.se");
+        item.setSupplier(s);
+
+        assertEquals(s, item.getSupplier());
+    }
+
+    @Test
+    void getSupplier_WhenNoSupplierAssigned_ShouldReturnNull() {
+        assertNull(item.getSupplier());
+    }
 }
