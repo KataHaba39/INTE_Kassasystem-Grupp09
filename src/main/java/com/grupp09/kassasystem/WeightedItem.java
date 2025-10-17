@@ -14,7 +14,8 @@ public class WeightedItem implements Item {
         this.itemGroup = itemGroup;
     }
 
-    public String getName() {
+    @Override
+    public String getItemName() {
         return itemName;
     }
 
@@ -34,8 +35,7 @@ public class WeightedItem implements Item {
         double pricePerGram = pricePerUnit.getValueAsDouble()/ weightUnit.gramsPerUnit();
         double grams = unit.toGrams(amount);
 
-        Money raw = new Money(pricePerGram).multiply(grams); // vad är det som menas med raw? ursprungliga kodraden var double raw = grams * pricePerGram;
-
+        Money raw = Money.toMoney(pricePerGram).multiply(grams); // vad är det som menas med raw? ursprungliga kodraden var double raw = grams * pricePerGram;
         return raw;
     }
 
