@@ -44,4 +44,49 @@ class FixedPriceItemTest {
         assertEquals("SEK", item.getPricePerUnit().getCurrency());
     }
 
+    @Test
+    void setSupplier_WhenNoSupplierAssigned_ShouldReturnTrue() {
+        Supplier s = new Supplier("S001", "Axfood", "info@axfood.se");
+        assertTrue(item.setSupplier(s), "Setting supplier should succeed when none assigned");
+        assertEquals(s, item.getSupplier(), "Supplier not correctly set");
+    }
+
+    @Test
+    void setSupplier_WhenSupplierAlreadyAssigned_ShouldReturnFalse() {
+        Supplier s1 = new Supplier("S001", "Axfood", "info@axfood.se");
+        Supplier s2 = new Supplier("S002", "Coop", "contact@coop.se");
+
+        item.setSupplier(s1);
+        assertFalse(item.setSupplier(s2), "Cannot assign a new supplier if one already exists");
+        assertEquals(s1, item.getSupplier(), "Original supplier should remain unchanged");
+    }
+
+    @Test
+    void removeSupplier_WhenSupplierAssigned_ShouldReturnTrue() {
+        Supplier s = new Supplier("S001", "Axfood", "info@axfood.se");
+        item.setSupplier(s);
+
+        assertTrue(item.removeSupplier(), "Removing assigned supplier should succeed");
+        assertNull(item.getSupplier(), "Supplier should be null after removal");
+    }
+
+    @Test
+    void removeSupplier_WhenNoSupplierAssigned_ShouldReturnFalse() {
+        assertFalse(item.removeSupplier(), "Removing supplier when none assigned should fail");
+        assertNull(item.getSupplier(), "Supplier should still be null");
+    }
+
+    @Test
+    void getSupplier_WhenSupplierAssigned_ShouldReturnCorrectSupplier() {
+        Supplier s = new Supplier("S001", "Axfood", "info@axfood.se");
+        item.setSupplier(s);
+
+        assertEquals(s, item.getSupplier(), "getSupplier should return assigned supplier");
+    }
+
+    @Test
+    void getSupplier_WhenNoSupplierAssigned_ShouldReturnNull() {
+        assertNull(item.getSupplier(), "getSupplier should return null if no supplier assigned");
+    }
+
 }
