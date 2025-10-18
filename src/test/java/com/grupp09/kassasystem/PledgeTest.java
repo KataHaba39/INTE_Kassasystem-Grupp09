@@ -1,8 +1,6 @@
 package com.grupp09.kassasystem;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.math.BigDecimal;
-
 import org.junit.jupiter.api.Test;
 
 public class PledgeTest {
@@ -24,5 +22,5 @@ public class PledgeTest {
         assertEquals(Money.toMoney(11.0d), Pledge.priceWithPledge(softDrinkItem));
         assertEquals(Money.toMoney(22.0d), Pledge.priceWithPledge(alcoholicBeverage));
     }
-    
+
 }
