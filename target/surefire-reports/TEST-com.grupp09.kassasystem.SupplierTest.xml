@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.grupp09.kassasystem.SupplierTest" time="0.016" tests="13" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.grupp09.kassasystem.SupplierTest" time="0.005" tests="13" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -16,7 +16,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="GB"/>
     <property name="sun.boot.library.path" value="C:\Users\joaki\AppData\Local\Programs\Eclipse Adoptium\jdk-21.0.5.11-hotspot\bin"/>
-    <property name="sun.java.command" value="C:\Users\joaki\AppData\Local\Temp\surefire11738534875574382466\surefirebooter11349111213964621881.jar C:\Users\joaki\AppData\Local\Temp\surefire11738534875574382466 2025-10-18T13-59-13_787-jvmRun1 surefire17650569357167893121tmp surefire_07977301235520993692tmp"/>
+    <property name="sun.java.command" value="C:\Users\joaki\AppData\Local\Temp\surefire4681944486928592883\surefirebooter4403534191791365491.jar C:\Users\joaki\AppData\Local\Temp\surefire4681944486928592883 2025-10-18T14-10-53_364-jvmRun1 surefire4039927478929419767tmp surefire_013614352473853717400tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\joaki\Uni\INTE HT2025\Projektet\INTE_Kassasystem-Grupp09\target\test-classes;C:\Users\joaki\Uni\INTE HT2025\Projektet\INTE_Kassasystem-Grupp09\target\classes;C:\Users\joaki\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.11.0-M2\junit-jupiter-engine-5.11.0-M2.jar;C:\Users\joaki\.m2\repository\org\junit\platform\junit-platform-engine\1.11.0-M2\junit-platform-engine-1.11.0-M2.jar;C:\Users\joaki\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\joaki\.m2\repository\org\junit\platform\junit-platform-commons\1.11.0-M2\junit-platform-commons-1.11.0-M2.jar;C:\Users\joaki\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.11.0-M2\junit-jupiter-api-5.11.0-M2.jar;C:\Users\joaki\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\joaki\.m2\repository\org\junit\platform\junit-platform-runner\1.11.0-M2\junit-platform-runner-1.11.0-M2.jar;C:\Users\joaki\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar;C:\Users\joaki\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\joaki\.m2\repository\org\junit\platform\junit-platform-launcher\1.11.0-M2\junit-platform-launcher-1.11.0-M2.jar;C:\Users\joaki\.m2\repository\org\junit\platform\junit-platform-suite-api\1.11.0-M2\junit-platform-suite-api-1.11.0-M2.jar;C:\Users\joaki\.m2\repository\org\junit\platform\junit-platform-suite-commons\1.11.0-M2\junit-platform-suite-commons-1.11.0-M2.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -31,7 +31,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\joaki\AppData\Local\Temp\surefire11738534875574382466\surefirebooter11349111213964621881.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\joaki\AppData\Local\Temp\surefire4681944486928592883\surefirebooter4403534191791365491.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.5+11-LTS"/>
@@ -62,15 +62,15 @@
   </properties>
   <testcase name="getItems_ShouldReturnUnmodifiableSet" classname="com.grupp09.kassasystem.SupplierTest" time="0"/>
   <testcase name="testDeactivateAndActivate" classname="com.grupp09.kassasystem.SupplierTest" time="0"/>
-  <testcase name="doesNotContainItem_AfterRemovingItemFromSupplier_SupplierRemovedFromItemFirst" classname="com.grupp09.kassasystem.SupplierTest" time="0.002"/>
+  <testcase name="doesNotContainItem_AfterRemovingItemFromSupplier_SupplierRemovedFromItemFirst" classname="com.grupp09.kassasystem.SupplierTest" time="0"/>
   <testcase name="addItem_SameItemTwice_ShouldReturnFalseAndNotDuplicate" classname="com.grupp09.kassasystem.SupplierTest" time="0"/>
-  <testcase name="testEmptyNameThrowsError" classname="com.grupp09.kassasystem.SupplierTest" time="0.003"/>
-  <testcase name="ifItemStillHasTheSupplier_removeSupplierShouldFail" classname="com.grupp09.kassasystem.SupplierTest" time="0.001"/>
-  <testcase name="ifItemDoesNotHaveSupplier_addItemShouldFail" classname="com.grupp09.kassasystem.SupplierTest" time="0.003"/>
-  <testcase name="TestEmptySupplierIdThrowsError" classname="com.grupp09.kassasystem.SupplierTest" time="0"/>
+  <testcase name="testEmptyNameThrowsError" classname="com.grupp09.kassasystem.SupplierTest" time="0"/>
+  <testcase name="ifItemStillHasTheSupplier_removeSupplierShouldFail" classname="com.grupp09.kassasystem.SupplierTest" time="0"/>
+  <testcase name="ifItemDoesNotHaveSupplier_addItemShouldFail" classname="com.grupp09.kassasystem.SupplierTest" time="0"/>
+  <testcase name="TestEmptySupplierIdThrowsError" classname="com.grupp09.kassasystem.SupplierTest" time="0.004"/>
   <testcase name="getItems_ContainsItem_AfterAddingItemToSupplier" classname="com.grupp09.kassasystem.SupplierTest" time="0"/>
   <testcase name="getItems_ListIsEmpty_BeforeAddingItemToSupplier" classname="com.grupp09.kassasystem.SupplierTest" time="0"/>
   <testcase name="removeItem_ItemNotInSupplier_ShouldReturnFalse" classname="com.grupp09.kassasystem.SupplierTest" time="0"/>
   <testcase name="addItem_ItemWithDifferentSupplier_ShouldFail" classname="com.grupp09.kassasystem.SupplierTest" time="0"/>
-  <testcase name="testSupplierCreatedCorrectly" classname="com.grupp09.kassasystem.SupplierTest" time="0.006"/>
+  <testcase name="testSupplierCreatedCorrectly" classname="com.grupp09.kassasystem.SupplierTest" time="0"/>
 </testsuite>
