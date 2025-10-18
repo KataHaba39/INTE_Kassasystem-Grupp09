@@ -23,5 +23,18 @@ public class ReceiptItem {
         }
     }
 
+    public Item getItem() {
+        return item;
+    }
+
+    // beaktar endast Item och weight unit, quantity spelar ingen  roll
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof ReceiptItem)) {
+            return false;
+        }
+        ReceiptItem o = (ReceiptItem) other;
+        return this.item.equals(o.item) && this.unit == o.unit;
+    }
 
 }
