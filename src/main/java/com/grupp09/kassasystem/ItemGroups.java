@@ -1,5 +1,24 @@
 package com.grupp09.kassasystem;
 
 public enum ItemGroups {
-    FARDIGMAT, TOBAK, GODIS, DRYCK, FRUKT_GRONT, MEJERI, KOTT, SKALDJUR, BROD, DRYCK_ALKOHOL
+    FARDIGMAT(0), TOBAK(18), GODIS(0), DRYCK(0), FRUKT_GRONT(0), MEJERI(0), KOTT(0), SKALDJUR(0), BROD(0), DRYCK_ALKOHOL(18);
+
+
+    private final int minimumAge;
+    
+    ItemGroups(int minimumAge) {
+        this.minimumAge = minimumAge;
+    }
+
+    public int getMinimumAge() {
+        return minimumAge;
+    }
+
+    public boolean isAgeRestricted() {
+        return minimumAge > 0;
+    }
+
+    public boolean isAllowedFor(int age) {
+        return age >= minimumAge;
+    }
 }
