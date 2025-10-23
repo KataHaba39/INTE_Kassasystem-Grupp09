@@ -3,7 +3,7 @@ package com.grupp09.kassasystem;
 public class ReceiptItem {
     private final Item item;
     private final double quantity;
-    private final WeighUnit unit;
+    private final WeightUnit unit;
 
     public ReceiptItem(Item item, double quantity, WeightUnit unit) {
         this.item = item;
@@ -23,5 +23,18 @@ public class ReceiptItem {
         }
     }
 
+    public Item getItem() {
+        return item;
+    }
+
+    // beaktar endast Item och weight unit, quantity spelar ingen  roll
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof ReceiptItem)) {
+            return false;
+        }
+        ReceiptItem o = (ReceiptItem) other;
+        return this.item.equals(o.item) && this.unit == o.unit;
+    }
 
 }
