@@ -13,6 +13,10 @@ public class Customer {
         this.email = email;
     }
 
+    public Customer(String customerId, String name) {
+        this(customerId, name, null, null);
+    }
+
     public String getCustomerId() {
         return customerId;
     }
