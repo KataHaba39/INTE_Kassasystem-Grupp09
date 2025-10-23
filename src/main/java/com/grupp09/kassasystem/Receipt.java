@@ -19,12 +19,12 @@ public class Receipt {
         nrOfItemsByName.compute(ri, (k, v) -> v == null ? quantity : v + quantity);
     }
 
-    public Item removeItem(Item item) {
-        ReceiptItem removed = nrOfItemsByName.remove(item);
-        if (removed == null) {
+    // returns number of items removed
+    public double removeItem(Item item) {
+        if (!nrOfItemsByName.containsKey(item)) {
             throw new NoSuchElementException();
         }
-        return removed.getItem();
+        return nrOfItemsByName.remove(item);
     }
 
     public Money calculateTotal() {
