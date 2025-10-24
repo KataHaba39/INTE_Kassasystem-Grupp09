@@ -4,10 +4,10 @@ public class WeightedItem implements Item {
     private final String itemName;
     private final Money pricePerUnit;
     private final WeightUnit weightUnit;
-    private final ItemGroups itemGroup;
+    private final ItemGroup itemGroup;
     private Supplier supplier;
 
-    public WeightedItem(String itemName, Money pricePerUnit, WeightUnit weightUnit, ItemGroups itemGroup) {
+    public WeightedItem(String itemName, Money pricePerUnit, WeightUnit weightUnit, ItemGroup itemGroup) {
         this.itemName = itemName;
         this.pricePerUnit = pricePerUnit;
         if (weightUnit == null)  throw new NullPointerException("Weight unit is required!");
@@ -41,7 +41,7 @@ public class WeightedItem implements Item {
     }
 
     @Override
-    public ItemGroups getItemGroup() {
+    public ItemGroup getItemGroup() {
         return itemGroup;
     }
 

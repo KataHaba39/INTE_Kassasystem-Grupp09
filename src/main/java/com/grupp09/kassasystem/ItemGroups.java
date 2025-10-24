@@ -1,29 +1,39 @@
 package com.grupp09.kassasystem;
 
-public enum ItemGroups {
-    FARDIGMAT(0), TOBAK(18), GODIS(0), DRYCK(0), FRUKT_GRONT(0), MEJERI(0), KOTT(0), SKALDJUR(0), BROD(0),
-    DRYCK_ALKOHOL(18);
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-    private final int minimumAge;
+public class ItemGroups {
+    private static final List<ItemGroup> groups = new ArrayList<>();
 
-    ItemGroups(int minimumAge) {
-        this.minimumAge = validateMinimumAge(minimumAge);
+    public static final ItemGroup FARDIGMAT = new ItemGroup("FARDIGMAT", 0);
+    public static final ItemGroup TOBAK = new ItemGroup("TOBAK", 18);
+    public static final ItemGroup GODIS = new ItemGroup("GODIS", 0);
+    public static final ItemGroup DRYCK = new ItemGroup("DRYCK", 0);
+    public static final ItemGroup FRUKT_GRONT = new ItemGroup("FRUKT_GRONT", 0);
+    public static final ItemGroup MEJERI = new ItemGroup("MEJERI", 0);
+    public static final ItemGroup KOTT = new ItemGroup("KOTT", 0);
+    public static final ItemGroup SKALDJUR = new ItemGroup("SKALDJUR", 0);
+    public static final ItemGroup BROD = new ItemGroup("BROD", 0);
+    public static final ItemGroup DRYCK_ALKOHOL = new ItemGroup("DRYCK_ALKOHOL", 18);
+
+    static {
+        groups.add(FARDIGMAT);
+        groups.add(TOBAK);
+        groups.add(GODIS);
+        groups.add(DRYCK);
+        groups.add(FRUKT_GRONT);
+        groups.add(MEJERI);
+        groups.add(KOTT);
+        groups.add(SKALDJUR);
+        groups.add(BROD);
+        groups.add(DRYCK_ALKOHOL);
     }
 
-    public static int validateMinimumAge(int age) {
-        if (age < 0) throw new IllegalArgumentException("Minimum age cannot be negative: " + age);
-        return age;
+    public static List<ItemGroup> getAllGroups() {
+        return Collections.unmodifiableList(groups);
     }
 
-    public int getMinimumAge() {
-        return minimumAge;
-    }
-
-    public boolean isAgeRestricted() {
-        return minimumAge > 0;
-    }
-
-    public boolean isAllowedFor(int age) {
-        return age >= minimumAge;
-    }
+    
 }
