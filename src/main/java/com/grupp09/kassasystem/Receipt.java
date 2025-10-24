@@ -24,6 +24,10 @@ public class Receipt {
         nrOfItemsByName.compute(ri, (k, v) -> v == null ? quantity : v + quantity);
     }
 
+    public List<ReceiptItem> getItems() {
+        return Collections.unmodifiableList(items);
+    }
+
     // Tar bort hela eller del av kvantiteten, returnerar borttagen mängd
     public double removeItem(Item item, double quantity, WeightUnit unit) {
         ReceiptItem key = new ReceiptItem(item, unit);
