@@ -54,9 +54,9 @@ public class MembershipTest {
     @Test
     void constructor_accepts_valid_parameters() {
         Membership m = new Membership("Namn", 23131, 8987327, "Address");
-        assertEquals("Enes", m.getName());
+        assertEquals("Namn", m.getName());
         assertEquals(23131, m.getId());
         assertEquals(8987327, m.getPhoneNumber());
-        assertEquals("Solna", m.getAddress());
+        assertEquals("Address", m.getAddress());
     }
 }
