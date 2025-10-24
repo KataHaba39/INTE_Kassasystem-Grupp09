@@ -13,19 +13,19 @@ public class MembershipTest {
         assertEquals("address", m.getAddress());
     }
 
-    // Expecting IllegalArgumentException, because name is blank 
-    /*@Test
+    // Expecting IllegalArgumentException, because name is blank
+    @Test
     void member_test_without_name() {
-        Membership m = new Membership("", 23131, 8987327, "address");
-        assertEquals(23131, m.getId());
+        assertThrows(IllegalArgumentException.class,
+                () -> new Membership("", 23131, 8987327, "address"));
     }
 
     // Expecting IllegalArgumentException, because id is 0
     @Test
     void member_test_without_id() {
-        Membership m = new Membership("namn", 1, 8987327, "address");
-        assertEquals(8987327, m.getPhoneNumber()); // KOLLA TESTER
-    }*/
+        assertThrows(IllegalArgumentException.class,
+                () -> new Membership("namn", 0, 8987327, "address"));
+    }
 
     @Test
     void constructor_rejects_blank_name() {
