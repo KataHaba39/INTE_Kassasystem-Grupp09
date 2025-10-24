@@ -56,7 +56,7 @@ public class Receipt {
 
         for (ReceiptItem ri : items) {
             double quantity = nrOfItemsByName.get(ri);
-            total.add(ri.getSubTotal(quantity));
+            total = total.add(ri.getSubTotal(quantity));
         }
 
         return total;
