@@ -5,7 +5,7 @@ public interface Item {
     boolean removeSupplier();
     Supplier getSupplier();
     String getItemName();
-    ItemGroups getItemGroup();
+    ItemGroup getItemGroup();
     Money getPricePerUnit();
     Money getTotalPrice(double amount, WeightUnit unit);
 }

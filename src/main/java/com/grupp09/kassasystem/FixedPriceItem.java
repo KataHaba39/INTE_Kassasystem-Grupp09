@@ -3,10 +3,10 @@ package com.grupp09.kassasystem;
 public class FixedPriceItem implements Item {
     private String itemName;
     private Money price;
-    private final ItemGroups itemGroup;
+    private final ItemGroup itemGroup;
     private Supplier supplier;
 
-    public FixedPriceItem(String itemName, Money price, ItemGroups itemGroup) {
+    public FixedPriceItem(String itemName, Money price, ItemGroup itemGroup) {
         this.itemName = itemName;
         this.price = price;
         this.itemGroup = itemGroup;
@@ -28,7 +28,7 @@ public class FixedPriceItem implements Item {
     }
 
     @Override
-    public ItemGroups getItemGroup() {
+    public ItemGroup getItemGroup() {
         return itemGroup;
     }
 

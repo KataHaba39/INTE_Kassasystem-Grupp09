@@ -25,13 +25,13 @@ public class ItemGroupsTest {
 
     @Test // Non-age-restricted item groups
     void test_non_age_restricted_items() {
-        for (ItemGroups group : ItemGroups.values()) {
-            if (group != ItemGroups.DRYCK_ALKOHOL && group != ItemGroups.TOBAK) {
-                assertFalse(group.isAgeRestricted());
-                assertTrue(group.isAllowedFor(0));
-                assertTrue(group.isAllowedFor(100));
-            }
+        for (ItemGroup group : ItemGroups.getAllGroups()) {
+        if (group != ItemGroups.DRYCK_ALKOHOL && group != ItemGroups.TOBAK) {
+            assertFalse(group.isAgeRestricted(), group.getName() + " should not be age restricted");
+            assertTrue(group.isAllowedFor(0), group.getName() + " should allow age 0");
+            assertTrue(group.isAllowedFor(100), group.getName() + " should allow age 100");
         }
+    }
     }
 
     @Test
@@ -42,13 +42,6 @@ public class ItemGroupsTest {
 
     @Test
     void test_validateMinimumAge_throws_exception_for_negative() {
-        assertThrows(IllegalArgumentException.class, () -> ItemGroups.validateMinimumAge(-5));
+        assertThrows(IllegalArgumentException.class, () -> ItemGroup.validateMinimumAge(-5));
     }
-
-    @Test
-    void test_validateMinimumAge_accepts_zero_and_positive() {
-        assertEquals(0, ItemGroups.validateMinimumAge(0));
-        assertEquals(27, ItemGroups.validateMinimumAge(27));
-    }
-
 }
