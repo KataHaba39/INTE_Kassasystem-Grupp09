@@ -1,6 +1,7 @@
 package com.grupp09.kassasystem;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -15,6 +16,15 @@ public class PaymentMethodTest {
 
         assertTrue(p.isPaidEnough());
         assertEquals(50.0, p.getChange().getValueAsDouble());
+    }
+
+    @Test
+    void test_cash_payment_is_not_enough() {
+        Money total = Money.toMoney(100.0);
+        Money paid = Money.toMoney(50.0);
+        Payment payment = new PaymentMethod("cash", total, paid);
+
+        assertFalse(payment.isPaidEnough());
     }
 
     @Test
