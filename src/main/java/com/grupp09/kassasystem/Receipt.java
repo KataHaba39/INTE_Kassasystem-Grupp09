@@ -7,7 +7,7 @@ public class Receipt {
     // har valt att betrakta två av samma produkt men olika weight unit som olika produktrader i kvitto, t.ex. skulle (kassa scannar) milk 1 st, milk 3 st, alla hamna på samma kvittorad och söga milk 4st
     // men om man först skannar apple 3,2kg och sedan skannar apple 120 gram kommer de att hamna på olika rader.
 
-    // har just nu tom konstruktor, men om vi t.ex. vill implementera kassa / personal, skulle det kunna vara parametrar i en konstruktor
+    // har just nu tom konstruktor, men om vi t.ex. vill implementera personal, skulle det kunna vara parametrar i en konstruktor
 
 
     private final Map<ReceiptItem, Double> nrOfItemsByName = new HashMap<>();
@@ -50,7 +50,6 @@ public class Receipt {
         return removed;
     }
 
-    // Beräknar totalpris
     public Money calculateTotal() {
         Money total = Money.toMoney(0.0);
 
@@ -62,7 +61,6 @@ public class Receipt {
         return total;
     }
 
-    // Skriver ut kvittot
     public void printReceipt() {
         System.out.println(createReceipt());
     }
