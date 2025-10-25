@@ -51,6 +51,66 @@ public final class Report {
         return html.toString();
     }
 
+    public static void generateReceiptReport(List<Receipt> receipts, String filePath) {
+        String html = buildReceiptReportHtml(receipts);
+        try(FileWriter writer = new FileWriter(filePath)) {
+            writer.write(html);
+            System.out.println("Receipt report created: " + filePath);
+        } catch (IOException e) {
+            System.err.println("Receipt report could not be written: " + e.getMessage());
+        }
+    }
+
+    public static void printReceiptReport(List<Receipt> receipts) {
+        System.out.println("====== Receipt Report ======");
+        Money totalSales = Money.toMoney(0.0);
+
+        for(int i = 0; i < receipts.size(); i++) {
+            Receipt r = receipts.get(i);
+            Money receiptTotal = r.calculateTotal();
+            System.out.println("Receipt: " + (i+1) + ": " + receiptTotal + " (" + r.getItems().size() + "items)");
+            totalSales = totalSales.add(receiptTotal);
+        }
+
+        System.out.println("--------------------------");
+        System.out.println("Total Sales: " + totalSales);
+        System.out.println("Number of receipts: " + receipts.size());
+        System.out.println("=============================");
+    }
+
+    public static String buildReceiptReportHtml(List<Receipt> receipts) {
+        StringBuilder html = new StringBuilder();
+        html.append("<html><head><meta charset=\"UTF-8\"><title>Receipt Report</title></head><body>");
+        html.append("<h1>Receipt Report</h1>");
+
+        Money totalSales = Money.toMoney(0.0);
+        int totalItems = 0;
+
+        html.append("<table border='1'><tr><th>Kvitto Nr</th><th>Antal varor</th><th>Summa</th></tr>");
+
+        for(int i = 0; i < receipts.size(); i++) {
+            Receipt r = receipts.get(i);
+            Money receiptTotal = r.calculateTotal();
+            totalSales = totalSales.add(receiptTotal);
+            totalItems += r.getItems().size();
+
+            html.append("<tr>")
+                .append("<td>").append(i+1).append("</td>")
+                .append("<td>").append(r.getItems().size()).append("</td>")
+                .append("<td>").append(receiptTotal.toString()).append("</td>")
+                .append("</tr>");
+        }
+
+        html.append("</table>");
+        html.append("<h2>Summary</h2>");
+        html.append("<p>Number of receipts: ").append(receipts.size()).append("</p>");
+        html.append("<p>Total number of items: ").append(totalItems).append("</p>");
+        html.append("<p>Total sales: ").append(totalSales.toString()).append("</p>");
+        html.append("</body></html>");
+
+        return html.toString();
+    }
+
     private static String safe(String value) {
         return Objects.requireNonNullElse(value, "-");
     }
