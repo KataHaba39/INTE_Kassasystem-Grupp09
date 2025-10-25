@@ -14,10 +14,6 @@ public class Receipt {
     private final List<ReceiptItem> items = new ArrayList<>();
     private Customer customer;
 
-    public Receipt() {
-        this.customer = null;
-    }
-
     public Receipt(Customer customer) {
         this.customer = customer;
     }

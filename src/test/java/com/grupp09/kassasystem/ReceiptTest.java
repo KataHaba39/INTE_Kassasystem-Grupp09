@@ -12,7 +12,8 @@ class ReceiptTest {
 
     @Test
     void testAddFixedPriceItem() {
-        Receipt receipt = new Receipt();
+        Customer customer = new Customer("TEST001", "Test Customer");
+        Receipt receipt = new Receipt(customer);
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
 
         receipt.addItem(milk, 2, null); // 2 st milk
@@ -24,7 +25,8 @@ class ReceiptTest {
 
     @Test
     void testAddWeightedItemsDifferentUnits() {
-        Receipt receipt = new Receipt();
+        Customer customer = new Customer("TEST002", "Test Customer 2");
+        Receipt receipt = new Receipt(customer);
         Item appleKg = new WeightedItem("Apple", Money.toMoney(50), WeightUnit.KILO, ItemGroups.FRUKT_GRONT);
         Item appleG = new WeightedItem("Apple", Money.toMoney(50), WeightUnit.KILO, ItemGroups.FRUKT_GRONT);
 
@@ -38,7 +40,8 @@ class ReceiptTest {
 
     @Test
     void testRemoveItemPartialQuantity() {
-        Receipt receipt = new Receipt();
+        Customer customer = new Customer("TEST003", "Test Customer 3");
+        Receipt receipt = new Receipt(customer);
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
 
         receipt.addItem(milk, 5, null);
@@ -50,7 +53,8 @@ class ReceiptTest {
 
     @Test
     void testRemoveItemEntireQuantity() {
-        Receipt receipt = new Receipt();
+        Customer customer = new Customer("TEST004", "Test Customer 4");
+        Receipt receipt = new Receipt(customer);
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
 
         receipt.addItem(milk, 3, null);
@@ -63,7 +67,8 @@ class ReceiptTest {
 
     @Test
     void testRemoveNonExistingItemThrows() {
-        Receipt receipt = new Receipt();
+        Customer customer = new Customer("TEST005", "Test Customer 5");
+        Receipt receipt = new Receipt(customer);
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
 
         assertThrows(NoSuchElementException.class, () -> receipt.removeItem(milk, 1, null));
@@ -71,7 +76,8 @@ class ReceiptTest {
 
     @Test
     void testReceiptOrderPreserved() {
-        Receipt receipt = new Receipt();
+        Customer customer = new Customer("TEST006", "Test Customer 6");
+        Receipt receipt = new Receipt(customer);
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
         Item bread = new FixedPriceItem("Bread", Money.toMoney(15), ItemGroups.BROD);
 
@@ -82,19 +88,6 @@ class ReceiptTest {
         assertEquals("Bread", receipt.getItems().get(1).getItem().getItemName());
     }
 
-     @Test
-    void testReceiptWithoutCustomer() {
-        Receipt receipt = new Receipt();
-        
-        assertNull(receipt.getCustomer());
-        
-        Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
-        receipt.addItem(milk, 1, null);
-        
-        // Kvittot ska fungera utan kund
-        assertEquals(Money.toMoney(10), receipt.calculateTotal());
-    }
-
     @Test
     void testReceiptWithCustomer() {
         Customer customer = new Customer("C001", "Anna Andersson", "0701234567", "anna@example.com");
@@ -103,6 +96,11 @@ class ReceiptTest {
         assertEquals(customer, receipt.getCustomer());
         assertEquals("Anna Andersson", receipt.getCustomer().getName());
         assertEquals("C001", receipt.getCustomer().getCustomerId());
+        
+        Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
+        receipt.addItem(milk, 1, null);
+        
+        assertEquals(Money.toMoney(10), receipt.calculateTotal());
     }
 
     @Test
@@ -117,14 +115,17 @@ class ReceiptTest {
         assertDoesNotThrow(() -> receipt.printReceipt());
         
         // Kontrollera att kundens namn finns i kvittosträngen
-        String receiptString = receipt.createReceipt(); // Om denna metod är public
+        String receiptString = receipt.createReceipt();
         assertTrue(receiptString.contains("Bengt Bengtsson"));
         assertTrue(receiptString.contains("Customer:"));
     }
 
     @Test
-    void testPrintReceiptWithoutCustomer() {
-        Receipt receipt = new Receipt();
+    void testReceiptWithNullCustomer() {
+        // Test med null customer (om det ska vara möjligt)
+        Receipt receipt = new Receipt(null);
+        
+        assertNull(receipt.getCustomer());
         
         Item bread = new FixedPriceItem("Bread", Money.toMoney(15), ItemGroups.BROD);
         receipt.addItem(bread, 1, null);
@@ -132,9 +133,8 @@ class ReceiptTest {
         // Kvittot ska skrivas ut utan fel även utan kund
         assertDoesNotThrow(() -> receipt.printReceipt());
         
-        // Om createReceipt() är public, kontrollera att det inte innehåller "Customer:"
-        // String receiptString = receipt.createReceipt();
-        // assertFalse(receiptString.contains("Customer:"));
+        String receiptString = receipt.createReceipt();
+        assertFalse(receiptString.contains("Customer:"));
     }
 
     @Test
@@ -155,6 +155,4 @@ class ReceiptTest {
         assertEquals(Money.toMoney(10), receipt1.calculateTotal());
         assertEquals(Money.toMoney(20), receipt2.calculateTotal());
     }
-
-
 }
