@@ -9,7 +9,7 @@ public class Money {
     private final static String CURRENCY = "SEK";
     private final BigDecimal value;
 
-    private Money(BigDecimal value){
+    private Money(BigDecimal value) {
         this.value = value.setScale(2, RoundingMode.HALF_UP);
     }
 
@@ -25,7 +25,7 @@ public class Money {
         return CURRENCY;
     }
 
-    public BigDecimal getValue(){
+    public BigDecimal getValue() {
         return value;
     }
 
@@ -72,6 +72,12 @@ public class Money {
         int result = value.stripTrailingZeros().hashCode();
         result = 31 * result + CURRENCY.hashCode();
         return result;
+    }
+
+    public int compareTo(Money other) {
+        if (other == null)
+            throw new IllegalArgumentException("Money to compare cannot be null");
+        return this.value.compareTo(other.value);
     }
 
 }
