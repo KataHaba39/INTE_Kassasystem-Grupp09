@@ -3,8 +3,6 @@ package com.grupp09.kassasystem;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-//Ev. också override HashCode
-
 public class Money {
     private final static String CURRENCY = "SEK";
     private final BigDecimal value;

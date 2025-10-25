@@ -30,7 +30,7 @@ public class WeightedItem implements Item {
     }
 
     @Override
-    public Money getTotalPrice(double amount, WeightUnit unit) {   //detta beror på hur Money är
+    public Money getTotalPrice(double amount, WeightUnit unit) {
         if (unit == null) throw new NullPointerException("Weight unit is required!");
 
         double pricePerGram = pricePerUnit.getValueAsDouble()/ weightUnit.gramsPerUnit();
