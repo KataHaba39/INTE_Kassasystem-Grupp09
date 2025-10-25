@@ -12,6 +12,19 @@ public class Receipt {
 
     private final Map<ReceiptItem, Double> nrOfItemsByName = new HashMap<>();
     private final List<ReceiptItem> items = new ArrayList<>();
+    private Customer customer;
+
+    public Receipt() {
+        this.customer = null;
+    }
+
+    public Receipt(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
 
     // Lägger till eller ökar kvantiteten
     public void addItem(Item item, double quantity, WeightUnit unit) {
@@ -65,10 +78,15 @@ public class Receipt {
         System.out.println(createReceipt());
     }
 
-    private String createReceipt() {
+    String createReceipt() {
         StringBuilder sb = new StringBuilder();
         sb.append("Receipt\n");
         sb.append("####################\n");
+
+        if(customer != null) {
+            sb.append("Customer: ").append(customer.getName()).append("\n");
+            sb.append("####################\n");
+        }
 
         for (ReceiptItem ri : items) {
             double quantity = nrOfItemsByName.get(ri);

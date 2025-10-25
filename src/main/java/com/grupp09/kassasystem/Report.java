@@ -111,6 +111,40 @@ public final class Report {
         return html.toString();
     }
 
+    public static Money calculateTotalSales(List<Receipt> receipts) {
+        Money total = Money.toMoney(0.0);
+        for(Receipt r : receipts) {
+            total = total.add(r.calculateTotal());
+        }
+        return total;
+    }
+
+    public static int countTotalItems(List<Receipt> receipts) {
+        int count = 0;
+        for(Receipt r : receipts) {
+            count += r.getItems().size();
+        }
+        return count;
+    }
+
+    public static Customer findBestCustomer(List<Receipt> receipts) {
+        if(receipts.isEmpty()) {
+            return null;
+        }
+
+        Customer bestCustomer = receipts.get(0).getCustomer();
+        Money highestSpending = Money.toMoney(0.0);
+
+        for(Receipt r : receipts) {
+            if(r.getCustomer() != null && r.calculateTotal().getValue().compareTo(highestSpending.getValue()) > 0) {
+                highestSpending = r.calculateTotal();
+                bestCustomer = r.getCustomer();
+            }
+        }
+
+        return bestCustomer;
+    }
+
     private static String safe(String value) {
         return Objects.requireNonNullElse(value, "-");
     }
