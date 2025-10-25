@@ -81,4 +81,80 @@ class ReceiptTest {
         assertEquals("Milk", receipt.getItems().get(0).getItem().getItemName());
         assertEquals("Bread", receipt.getItems().get(1).getItem().getItemName());
     }
+
+     @Test
+    void testReceiptWithoutCustomer() {
+        Receipt receipt = new Receipt();
+        
+        assertNull(receipt.getCustomer());
+        
+        Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
+        receipt.addItem(milk, 1, null);
+        
+        // Kvittot ska fungera utan kund
+        assertEquals(Money.toMoney(10), receipt.calculateTotal());
+    }
+
+    @Test
+    void testReceiptWithCustomer() {
+        Customer customer = new Customer("C001", "Anna Andersson", "0701234567", "anna@example.com");
+        Receipt receipt = new Receipt(customer);
+        
+        assertEquals(customer, receipt.getCustomer());
+        assertEquals("Anna Andersson", receipt.getCustomer().getName());
+        assertEquals("C001", receipt.getCustomer().getCustomerId());
+    }
+
+    @Test
+    void testPrintReceiptWithCustomer() {
+        Customer customer = new Customer("C002", "Bengt Bengtsson");
+        Receipt receipt = new Receipt(customer);
+        
+        Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
+        receipt.addItem(milk, 2, null);
+        
+        // Testa att kvittot skrivs ut utan fel
+        assertDoesNotThrow(() -> receipt.printReceipt());
+        
+        // Kontrollera att kundens namn finns i kvittosträngen
+        String receiptString = receipt.createReceipt(); // Om denna metod är public
+        assertTrue(receiptString.contains("Bengt Bengtsson"));
+        assertTrue(receiptString.contains("Customer:"));
+    }
+
+    @Test
+    void testPrintReceiptWithoutCustomer() {
+        Receipt receipt = new Receipt();
+        
+        Item bread = new FixedPriceItem("Bread", Money.toMoney(15), ItemGroups.BROD);
+        receipt.addItem(bread, 1, null);
+        
+        // Kvittot ska skrivas ut utan fel även utan kund
+        assertDoesNotThrow(() -> receipt.printReceipt());
+        
+        // Om createReceipt() är public, kontrollera att det inte innehåller "Customer:"
+        // String receiptString = receipt.createReceipt();
+        // assertFalse(receiptString.contains("Customer:"));
+    }
+
+    @Test
+    void testMultipleCustomerReceipts() {
+        Customer customer1 = new Customer("C001", "Anna");
+        Customer customer2 = new Customer("C002", "Bengt");
+        
+        Receipt receipt1 = new Receipt(customer1);
+        Receipt receipt2 = new Receipt(customer2);
+        
+        Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
+        
+        receipt1.addItem(milk, 1, null);
+        receipt2.addItem(milk, 2, null);
+        
+        assertEquals("Anna", receipt1.getCustomer().getName());
+        assertEquals("Bengt", receipt2.getCustomer().getName());
+        assertEquals(Money.toMoney(10), receipt1.calculateTotal());
+        assertEquals(Money.toMoney(20), receipt2.calculateTotal());
+    }
+
+
 }

@@ -16,4 +16,3 @@ public enum WeightUnit {
         return weight * gramsPerUnit;
     }
 }
-    
