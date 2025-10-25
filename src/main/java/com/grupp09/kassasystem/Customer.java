@@ -7,7 +7,7 @@ public class Customer {
     private String email;
     private Membership membership;
 
-    public Customer (String customerId, String name, String phoneNumber, String email) { // phoneNumber int? 
+    public Customer (String customerId, String name, String phoneNumber, String email) { 
         this.customerId = customerId;
         this.name = name;
         this.phoneNumber = phoneNumber;

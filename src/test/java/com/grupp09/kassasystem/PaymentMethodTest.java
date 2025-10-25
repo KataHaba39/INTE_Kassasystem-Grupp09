@@ -28,6 +28,26 @@ public class PaymentMethodTest {
     }
 
     @Test
+    void cash_payment_insufficient_funds_throws_exception() {
+        Money total = Money.toMoney(100.0);
+        Money paid = Money.toMoney(50.0);
+        Payment p = new PaymentMethod("cash", total, paid);
+
+        assertThrows(IllegalStateException.class, () -> p.getChange());
+    }
+
+    @Test
+    void test_payment_method_case_insensitivity() {
+        Payment p1 = new PaymentMethod("CaSh", Money.toMoney(100.0), Money.toMoney(150.0));
+        Payment p2 = new PaymentMethod("CARD", Money.toMoney(100.0), Money.toMoney(100.0));
+        Payment p3 = new PaymentMethod("swisH", Money.toMoney(50.0), Money.toMoney(50.0));
+
+        assertEquals("cash", p1.getMethod());
+        assertEquals("card", p2.getMethod());
+        assertEquals("swish", p3.getMethod());
+    }
+
+    @Test
     void test_card_payment_no_change() {
         Payment p = new PaymentMethod("card", Money.toMoney(100.0), Money.toMoney(100.0));
         assertTrue(p.isPaidEnough());
@@ -35,9 +55,15 @@ public class PaymentMethodTest {
     }
 
     @Test
-    void test_invalid_method_throws() {
+    void test_invalid_method_throws_exception() {
         assertThrows(IllegalArgumentException.class,
                 () -> new PaymentMethod("crypto", Money.toMoney(100.0), Money.toMoney(100.0)));
+    }
+
+    @Test
+    void test_null_payment_method_throws_exception() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new PaymentMethod(null, Money.toMoney(100.0), Money.toMoney(100.0)));
     }
 
 }
