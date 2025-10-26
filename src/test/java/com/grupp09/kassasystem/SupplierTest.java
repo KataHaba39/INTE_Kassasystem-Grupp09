@@ -143,4 +143,24 @@ class SupplierTest {
         assertFalse(s2.addItem(i), "Cannot add item to a supplier that doesn't match item's supplier");
     }
 
+    @Test
+    void deActivateShouldWorkWhenSupplierHasNoItems() {
+        Supplier s = new Supplier("S100", "ICA", "ica@ica.se");
+
+        s.deActivate();
+
+        assertFalse(s.isActive(), "Leverantör utan produkter ska kunna avaktiveras");
+    }
+
+    @Test
+    void deActivateShouldThrowIfSupplierStillHasItems() {
+        Supplier s = new Supplier("S200", "Willys", "kontakt@willys.se");
+        Item i = new FixedPriceItem("Apple", Money.toMoney(100.0), ItemGroups.FRUKT_GRONT);
+
+        i.setSupplier(s);
+        s.addItem(i);
+
+        assertThrows(IllegalStateException.class, s::deActivate, "Leverantör med produkter ska inte kunna avaktiveras");
+    }
+
 }
