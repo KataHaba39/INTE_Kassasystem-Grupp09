@@ -52,9 +52,7 @@ public final class Report {
     }
 
     public static void generateReceiptReport(List<Receipt> receipts, String filePath) {
-        if(receipts == null || receipts.isEmpty()) {
-            throw new IllegalArgumentException("Kan ej generera rapport för tom kvittolista");
-        }
+        ensureNotEmptyReceipts(receipts);
 
         String html = buildReceiptReportHtml(receipts);
         try(FileWriter writer = new FileWriter(filePath)) {
@@ -62,6 +60,12 @@ public final class Report {
             System.out.println("Receipt report created: " + filePath);
         } catch (IOException e) {
             System.err.println("Receipt report could not be written: " + e.getMessage());
+        }
+    }
+
+    private static void ensureNotEmptyReceipts(List<Receipt> receipts) {
+        if(receipts == null || receipts.isEmpty()) {
+            throw new IllegalArgumentException("Kan ej generera rapport för tom kvittolista");
         }
     }
 
@@ -97,22 +101,30 @@ public final class Report {
             Money receiptTotal = r.calculateTotal();
             totalSales = totalSales.add(receiptTotal);
             totalItems += r.getItems().size();
-
-            html.append("<tr>")
-                .append("<td>").append(i+1).append("</td>")
-                .append("<td>").append(r.getItems().size()).append("</td>")
-                .append("<td>").append(receiptTotal.toString()).append("</td>")
-                .append("</tr>");
+            
+            appendReceiptRow(html, i, r, receiptTotal);
         }
 
         html.append("</table>");
-        html.append("<h2>Summary</h2>");
-        html.append("<p>Number of receipts: ").append(receipts.size()).append("</p>");
-        html.append("<p>Total number of items: ").append(totalItems).append("</p>");
-        html.append("<p>Total sales: ").append(totalSales.toString()).append("</p>");
+        appendSummarySection(html, receipts.size(), totalItems, totalSales);
         html.append("</body></html>");
 
         return html.toString();
+    }
+
+    private static void appendReceiptRow(StringBuilder html, int index, Receipt r, Money receiptTotal) {
+        html.append("<tr>")
+                .append("<td>").append(index + 1).append("</td>")
+                .append("<td>").append(r.getItems().size()).append("</td>")
+                .append("<td>").append(receiptTotal.toString()).append("</td>")
+                .append("</tr>");
+    }
+
+    private static void appendSummarySection(StringBuilder html, int receiptCount, int totalItems, Money totalSales) {
+        html.append("<h2>Summary</h2>");
+        html.append("<p>Number of receipts: ").append(receiptCount).append("</p>");
+        html.append("<p>Total number of items: ").append(totalItems).append("</p>");
+        html.append("<p>Total sales: ").append(totalSales.toString()).append("</p>");
     }
 
     public static Money calculateTotalSales(List<Receipt> receipts) {
