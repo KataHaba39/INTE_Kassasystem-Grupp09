@@ -39,7 +39,7 @@ class CustomerTest {
         Customer c = new Customer("C004", "Maria");
 
         assertNull(c.getMembership());
-        assertFalse(c.hasMembership(null));
+        assertFalse(c.hasMembership());
     }
 
     @Test
@@ -51,7 +51,7 @@ class CustomerTest {
 
         assertNotNull(c.getMembership());
         assertEquals(membership, c.getMembership());
-        assertTrue(c.hasMembership(membership));
+        assertTrue(c.hasMembership());
     }
 
     @Test
@@ -83,7 +83,31 @@ class CustomerTest {
         assertEquals("0701111111", c.getPhoneNumber());
         assertEquals("anna@gmail.com", c.getEmail());
         assertEquals(membership, c.getMembership());
-        assertTrue(c.hasMembership(membership));
+        assertTrue(c.hasMembership());
+    }
+
+    @Test
+    void cannotActivateMembershipWithoutContactInfo() {
+        Customer c = new Customer("C300", "Jenna");
+
+        Membership m = new Membership("Silver", 42, 0707070707, "Silvergatan 3");
+
+        assertThrows(IllegalStateException.class, () -> {
+            c.activateMembership(m);
+        });
+    }
+
+    @Test
+    void canActivateMembershipWhenContactInfoExists() {
+        Customer c = new Customer("C301", "Lania", "0703334444", "lania@gmail.com");
+
+        Membership m = new Membership("Silver", 100, 0707070701, "kungsängen 3");
+
+        c.activateMembership(m);
+
+        assertTrue(c.hasMembership());
+        assertEquals(m, c.getMembership());
+
     }
 
 
