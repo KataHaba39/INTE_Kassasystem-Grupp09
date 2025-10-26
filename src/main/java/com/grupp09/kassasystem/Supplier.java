@@ -55,6 +55,9 @@ public class Supplier implements Iterable<Item> {
     }
 
     public void deActivate() {
+        if(!items.isEmpty()) {
+            throw new IllegalStateException("Leverantör kan ej avaktiveras om produkter fortfarande finns kvar");
+        }
         this.active = false;
     }
 
