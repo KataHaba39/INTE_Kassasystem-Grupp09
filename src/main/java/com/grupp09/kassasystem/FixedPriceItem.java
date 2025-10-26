@@ -7,6 +7,14 @@ public class FixedPriceItem implements Item {
     private Supplier supplier;
 
     public FixedPriceItem(String itemName, Money price, ItemGroup itemGroup) {
+        if (itemName == null || itemName.isBlank()) {
+            throw new IllegalArgumentException("Item name cannot be null or blank");
+        }
+
+        if (price == null || price.getValue().compareTo(java.math.BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Price cannot be null or negative");
+        }
+
         this.itemName = itemName;
         this.price = price;
         this.itemGroup = itemGroup;

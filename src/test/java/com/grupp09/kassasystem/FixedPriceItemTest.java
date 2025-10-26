@@ -18,6 +18,27 @@ class FixedPriceItemTest {
     }
 
     @Test
+    void constructor_ShouldThrowException_whenNameIsNull() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new FixedPriceItem(null, Money.toMoney(50.0), ItemGroups.FRUKT_GRONT);
+        });
+    }
+
+    @Test
+    void constructor_ShouldThrowException_WhenPriceIsNegative() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new FixedPriceItem("Banana", Money.toMoney(-50.0), ItemGroups.FRUKT_GRONT);
+        });
+    }
+
+    @Test
+    void constructor_ShouldHandleVeryLargePrice() {
+        assertDoesNotThrow(() -> {
+            new FixedPriceItem("T-Bone Steak", Money.toMoney(1_000_000.0), ItemGroups.KOTT);
+        }, "Should handle large price values without overflow");
+    }
+
+    @Test
     void testGetItemName() {
         assertEquals("Apple", item.getItemName());
     }
@@ -37,6 +58,12 @@ class FixedPriceItemTest {
         Money total = item.getTotalPrice(2, null);
         BigDecimal expected = price.getValue().multiply(BigDecimal.valueOf(2));
         assertEquals(0, expected.compareTo(total.getValue()));
+    }
+
+    @Test
+    void testGetTotalPrice_WithZeroQuantity() {
+        Money total = item.getTotalPrice(0, null);
+        assertEquals(0.0, total.getValueAsDouble(), "Total price for zero quantity should be zero");
     }
 
     @Test
