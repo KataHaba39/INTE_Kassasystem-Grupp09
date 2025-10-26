@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 public class PaymentMethodTest {
 
     @Test
-    void constructor_rejects_null_or_blank_method() {
+    void constructorRejects_null_or_blank_method() {
         assertThrows(IllegalArgumentException.class,
                 () -> new PaymentMethod(null, Money.toMoney(100), Money.toMoney(100)));
         assertThrows(IllegalArgumentException.class,
@@ -18,19 +18,13 @@ public class PaymentMethodTest {
     }
 
     @Test
-    void test_constructor_rejects_null_method() {
-        assertThrows(IllegalArgumentException.class,
-                () -> new PaymentMethod(null, Money.toMoney(100.0), Money.toMoney(100.0)));
-    }
-
-    @Test
-    void test_constructor_rejects_unknown_method() {
+    void constructorRejects_unknown_method() {
         assertThrows(IllegalArgumentException.class,
                 () -> new PaymentMethod("crypto", Money.toMoney(100.0), Money.toMoney(100.0)));
     }
 
     @Test
-    void test_constructor_rejects_null_amounts() {
+    void constructorRejects_null_amounts() {
         assertThrows(IllegalArgumentException.class,
                 () -> new PaymentMethod("cash", null, Money.toMoney(100.0)));
         assertThrows(IllegalArgumentException.class,
@@ -38,7 +32,7 @@ public class PaymentMethodTest {
     }
 
     @Test
-    void test_cash_payment_change() {
+    void cashPayment_getChange() {
         Money total = Money.toMoney(100.0);
         Money paid = Money.toMoney(150.0);
         Payment p = new PaymentMethod("cash", total, paid);
@@ -48,7 +42,7 @@ public class PaymentMethodTest {
     }
 
     @Test
-    void test_cash_payment_is_not_enough() {
+    void test_cashPayment_is_not_enough() {
         Money total = Money.toMoney(100.0);
         Money paid = Money.toMoney(50.0);
         Payment payment = new PaymentMethod("cash", total, paid);
@@ -57,7 +51,7 @@ public class PaymentMethodTest {
     }
 
     @Test
-    void cash_payment_insufficient_funds_throws_exception() {
+    void cashPayment_insufficient_funds_throws_exception() {
         Money total = Money.toMoney(100.0);
         Money paid = Money.toMoney(50.0);
         Payment p = new PaymentMethod("cash", total, paid);
