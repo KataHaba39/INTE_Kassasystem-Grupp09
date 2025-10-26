@@ -39,7 +39,7 @@ class CustomerTest {
         Customer c = new Customer("C004", "Maria");
 
         assertNull(c.getMembership());
-        assertFalse(c.hasMembership(null));
+        assertFalse(c.hasMembership());
     }
 
     @Test
@@ -51,7 +51,7 @@ class CustomerTest {
 
         assertNotNull(c.getMembership());
         assertEquals(membership, c.getMembership());
-        assertTrue(c.hasMembership(membership));
+        assertTrue(c.hasMembership());
     }
 
     @Test
@@ -83,7 +83,7 @@ class CustomerTest {
         assertEquals("0701111111", c.getPhoneNumber());
         assertEquals("anna@gmail.com", c.getEmail());
         assertEquals(membership, c.getMembership());
-        assertTrue(c.hasMembership(membership));
+        assertTrue(c.hasMembership());
     }
 
     @Test

@@ -51,8 +51,15 @@ public class Customer {
         this.membership = membership;
     }
 
-    public boolean hasMembership(Membership membership) {
-        return membership != null;
+    public boolean hasMembership() {
+        return this.membership != null;
+    }
+
+    public void activateMembership(Membership membership) {
+        if(this.email == null || this.phoneNumber == null) {
+            throw new IllegalStateException("Kan ej aktivera medlemskap utan kontakt information");
+        }
+        this.membership = membership;
     }
 
     @Override
