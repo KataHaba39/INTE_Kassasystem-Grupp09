@@ -52,6 +52,10 @@ public final class Report {
     }
 
     public static void generateReceiptReport(List<Receipt> receipts, String filePath) {
+        if(receipts == null || receipts.isEmpty()) {
+            throw new IllegalArgumentException("Kan ej generera rapport för tom kvittolista");
+        }
+
         String html = buildReceiptReportHtml(receipts);
         try(FileWriter writer = new FileWriter(filePath)) {
             writer.write(html);
