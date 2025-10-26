@@ -15,44 +15,39 @@ public class MembershipTest {
 
     // Expecting IllegalArgumentException, because name is blank
     @Test
-    void member_test_without_name() {
+    void constructorRejects_blankName() {
         assertThrows(IllegalArgumentException.class,
-                () -> new Membership("", 23131, 8987327, "address"));
+                () -> new Membership(" ", 23131, 8987327, "address"));
     }
 
     // Expecting IllegalArgumentException, because id is 0
     @Test
-    void member_test_without_id() {
+    void constructorRejects_when_idIs_Zero() {
         assertThrows(IllegalArgumentException.class,
                 () -> new Membership("namn", 0, 8987327, "address"));
     }
 
+    // Detta test ska ändras om vi ändrar phoneNumber till String
     @Test
-    void constructor_rejects_blank_name() {
-        assertThrows(IllegalArgumentException.class,
-                () -> new Membership("   ", 239731, 467028327, "address"));
-    }
-
-    @Test
-    void constructor_rejects_zero_id() {
-        assertThrows(IllegalArgumentException.class,
-                () -> new Membership("Namn", 0, 8987327, "address"));
-    }
-
-    @Test
-    void constructor_rejects_negative_phone_number() {
+    void constructorRejects_negative_phone_number() {
         assertThrows(IllegalArgumentException.class,
                 () -> new Membership("Namn", 23131, -12345, "address"));
     }
 
     @Test
-    void constructor_rejects_blank_address() {
+    void constructorRejects_blankAddress() {
         assertThrows(IllegalArgumentException.class,
                 () -> new Membership("Namn", 23131, 8987327, "   "));
     }
 
     @Test
-    void constructor_accepts_valid_parameters() {
+    void getMemberInfo_returnsCorrectFormat() {
+        Membership m = new Membership("Namn", 12345, 5551234, "address");
+        assertEquals("Namn (ID: 12345)", m.getMemberInfo());
+    }
+
+    @Test
+    void constructorAccepts_validParameters() {
         Membership m = new Membership("Namn", 23131, 8987327, "Address");
         assertEquals("Namn", m.getName());
         assertEquals(23131, m.getId());

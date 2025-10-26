@@ -8,6 +8,35 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 public class PaymentMethodTest {
+
+    @Test
+    void constructor_rejects_null_or_blank_method() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new PaymentMethod(null, Money.toMoney(100), Money.toMoney(100)));
+        assertThrows(IllegalArgumentException.class,
+                () -> new PaymentMethod("   ", Money.toMoney(100), Money.toMoney(100)));
+    }
+
+    @Test
+    void test_constructor_rejects_null_method() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new PaymentMethod(null, Money.toMoney(100.0), Money.toMoney(100.0)));
+    }
+
+    @Test
+    void test_constructor_rejects_unknown_method() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new PaymentMethod("crypto", Money.toMoney(100.0), Money.toMoney(100.0)));
+    }
+
+    @Test
+    void test_constructor_rejects_null_amounts() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new PaymentMethod("cash", null, Money.toMoney(100.0)));
+        assertThrows(IllegalArgumentException.class,
+                () -> new PaymentMethod("cash", Money.toMoney(100.0), null));
+    }
+
     @Test
     void test_cash_payment_change() {
         Money total = Money.toMoney(100.0);
@@ -53,17 +82,4 @@ public class PaymentMethodTest {
         assertTrue(p.isPaidEnough());
         assertEquals(0.0, p.getChange().getValueAsDouble());
     }
-
-    @Test
-    void test_invalid_method_throws_exception() {
-        assertThrows(IllegalArgumentException.class,
-                () -> new PaymentMethod("crypto", Money.toMoney(100.0), Money.toMoney(100.0)));
-    }
-
-    @Test
-    void test_null_payment_method_throws_exception() {
-        assertThrows(IllegalArgumentException.class,
-                () -> new PaymentMethod(null, Money.toMoney(100.0), Money.toMoney(100.0)));
-    }
-
 }

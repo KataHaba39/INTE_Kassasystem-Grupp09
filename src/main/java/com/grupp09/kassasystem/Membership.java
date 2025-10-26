@@ -45,4 +45,8 @@ public class Membership {
     public int getPhoneNumber() {
         return phoneNumber;
     }
+
+    public String getMemberInfo() {
+        return name + " (ID: " + id + ")";
+    }
 }
