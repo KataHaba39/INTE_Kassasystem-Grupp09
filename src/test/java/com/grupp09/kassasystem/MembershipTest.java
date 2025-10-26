@@ -11,15 +11,15 @@ public class MembershipTest {
 
     @BeforeEach
     void setUp() {
-        member = new Membership("Namn", 23131, 8987327, "Address");
+        member = new Membership("Namn", 12345, 5551234, "address");
     }
 
     @Test
     void constructorAccepts_validParameters() {
         assertEquals("Namn", member.getName());
-        assertEquals(23131, member.getId());
-        assertEquals(8987327, member.getPhoneNumber());
-        assertEquals("Address", member.getAddress());
+        assertEquals(12345, member.getId());
+        assertEquals(5551234, member.getPhoneNumber());
+        assertEquals("address", member.getAddress());
     }
 
     @Test
