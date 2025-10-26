@@ -7,24 +7,31 @@ public class Customer {
     private String email;
     private Membership membership;
 
-    public Customer (String customerId, String name, String phoneNumber, String email) { // phoneNumber int? 
-        this.customerId = customerId;
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.membership = null;
-    }
-
-    public Customer(String customerId, String name) {
-        this(customerId, name, null, null);
-    }
-
     public Customer(String customerId, String name, String phoneNumber, String email, Membership membership) {
+        
+        if(customerId == null || customerId.isBlank()) {
+            throw new IllegalArgumentException("customerId kan inte tom");
+        }
+        if(name == null || name.isBlank()) {
+            throw new IllegalArgumentException("name kan inte tom");
+        }
+         if(phoneNumber != null && !phoneNumber.matches("\\d+")) {
+            throw new IllegalArgumentException("ogiltig telefon nummer");
+        }
+        
         this.customerId = customerId;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.membership = membership;
+    }
+
+    public Customer (String customerId, String name, String phoneNumber, String email) { // phoneNumber int? 
+        this(customerId, name, phoneNumber, email, null);
+    }
+
+    public Customer(String customerId, String name) {
+        this(customerId, name, null, null, null);
     }
 
     public String getCustomerId() {
@@ -64,11 +71,12 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" + "Id='" + customerId + '\'' + 
+        return "Customer{" + 
+        "Id='" + customerId + '\'' + 
         ", Name='" + name + '\'' +
         ", Phone='" + phoneNumber + '\'' +
         ", email='" + email + '\'' +
-        ", membership=" + (membership != null ? "Yes" : "No") +
+        ", membership=" + (hasMembership() ? "Yes" : "No") +
         '}';
     }
 }
