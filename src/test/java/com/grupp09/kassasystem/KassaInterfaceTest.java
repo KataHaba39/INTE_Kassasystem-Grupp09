@@ -107,6 +107,7 @@ public class KassaInterfaceTest {
 
     @Test
     void customer_CanContinueToPayment(){
+        receipt.addItem(new FixedPriceItem("Milk", Money.toMoney(12.0d), ItemGroups.MEJERI), 1, null);
 
         provideInput("6");
 
@@ -116,6 +117,19 @@ public class KassaInterfaceTest {
 
         assertTrue(output.contains("Continues to payment"));
 
+    }
+
+    @Test
+    void receiptWithZeroItems_canNotContinueToPayment(){
+        Receipt emptyReceipt = new Receipt(customer);
+
+        provideInput("6");
+
+        KassaInterface.handleItems(emptyReceipt);
+        
+        String output = outContent.toString();
+
+        assertTrue(output.contains("Error: Receipt must contain at least one items to continue"));
     }
 
     /*@BeforeEach

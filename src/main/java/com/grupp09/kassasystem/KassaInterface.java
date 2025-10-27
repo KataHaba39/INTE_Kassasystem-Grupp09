@@ -70,6 +70,10 @@ public class KassaInterface {
                     System.out.println("Cancelled purchase");
                     return false;
                 case "6":
+                    if(receipt.getItems().isEmpty()){
+                        System.out.println("Error: Receipt must contain at least one items to continue");
+                        return false;
+                    }
                     System.out.println("Continues to payment");
                     break;
                 default:
