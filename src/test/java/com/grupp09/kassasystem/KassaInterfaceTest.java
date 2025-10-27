@@ -40,7 +40,8 @@ public class KassaInterfaceTest {
         provideInput(simulatedInput);
 
         // Kör hela programmet
-        KassaInterface.main(new String[]{});
+        //KassaInterface.main(new String[]{});
+        KassaInterface.registerCustomer();
 
         // Läs all output
         String output = outContent.toString();
@@ -53,6 +54,17 @@ public class KassaInterfaceTest {
         assertTrue(output.contains("Customer registered"), "Should confirm registration");
     }
 
+    @Test
+    void customer_canCancelAfterRegistration(){
+        provideInput("2");
+
+        //KassaInterface.main(new String[]{});
+        KassaInterface.customerContinuesPurchase();
+
+        String output = outContent.toString();
+
+        assertTrue(output.contains("Purchase cancelled"));
+    }
     
     /*@BeforeEach
     void setUp() throws Exception {

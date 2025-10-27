@@ -5,10 +5,11 @@ import java.util.Scanner;
 public class KassaInterface {
     static Scanner input = new Scanner(System.in);
     public static void main(String[] args) {
-        registerCustomer();
+        Customer customer = registerCustomer();
+        boolean choice = customerContinuesPurchase();
     }
 
-    private static Customer registerCustomer(){
+    static Customer registerCustomer(){
         System.out.println("Enter ID");
         String id = input.nextLine();
         System.out.println("Enter name");
@@ -21,5 +22,17 @@ public class KassaInterface {
         System.out.println("Customer registered");
 
         return customer;
+    }
+
+    static boolean customerContinuesPurchase(){
+        System.out.println("1 to continue, 2 to cancel");
+        String choice = input.nextLine();
+
+        if(choice.equals("1")){
+            return true;
+        }
+        
+        System.out.println("Purchase cancelled");
+        return false;
     }
 }
