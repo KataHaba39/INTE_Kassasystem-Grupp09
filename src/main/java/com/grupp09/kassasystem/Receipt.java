@@ -121,6 +121,7 @@ public class Receipt {
             sb.append(String.format("%-20s %s\n", "Discounted Total:", discountedTotal));
         }
 
-        return sb.toString();
+        String res = sb.toString();
+        return res;
     }
 }

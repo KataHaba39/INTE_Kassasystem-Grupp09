@@ -1,6 +1,6 @@
 package com.grupp09.kassasystem;
 
-public class Membership {
+public class Membership { // KAN BYTAS SEDAN
     private String name;
     private int id;
     private int phoneNumber;
