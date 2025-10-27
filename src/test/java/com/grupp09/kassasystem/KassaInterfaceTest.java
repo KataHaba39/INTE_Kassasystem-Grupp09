@@ -12,14 +12,15 @@ public class KassaInterfaceTest {
     @BeforeEach
     void setUp() throws Exception {
         Customer customer = new Customer("12345", "Alice", "234567", "mail");
-        Customer memberCustomer = new Customer("54321", "Bob", "7654321", "mail2", new Membership("Bob", 1, 7654321, "Address"));
         Receipt receipt = new Receipt(customer);
-        Receipt memberReceipt = new Receipt(memberCustomer);
     }
 
     @Test
-    void test1() {
-        
+    void registerCustomer_worksCorrectly() {
+        provideInput("Customer ID");
+        provideInput("Name");
+        provideInput("Phone number");
+        provideInput("Mail");
     }
 
     @Test
