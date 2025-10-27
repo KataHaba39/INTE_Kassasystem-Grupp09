@@ -16,6 +16,8 @@ public class KassaInterfaceTest {
     private final InputStream originalIn = System.in;
     private final PrintStream originalOut = System.out;
     private ByteArrayOutputStream outContent;
+    private Customer customer = new Customer("12345", "Alice", "234567", "mail");
+    private Receipt receipt = new Receipt(customer);
 
     @BeforeEach
     void setUp() {
@@ -66,6 +68,56 @@ public class KassaInterfaceTest {
         assertTrue(output.contains("Purchase cancelled"));
     }
     
+    @Test
+    void canAddItem(){
+        provideInput("1");
+
+        KassaInterface.handleItems(receipt);
+
+        String output = outContent.toString();
+
+        assertTrue(output.contains("Product was added"));
+    }
+
+    @Test
+    void canRemoveItem(){
+        receipt.addItem(new FixedPriceItem("Milk", Money.toMoney(12.0d), ItemGroups.MEJERI), 1, null);
+
+        provideInput("2");
+
+        KassaInterface.handleItems(receipt);
+        
+        String output = outContent.toString();
+
+        assertTrue(output.contains("Product was removed"));
+    }
+
+    @Test
+    void customer_CanCancelwhenHandlingItems(){
+
+        provideInput("5");
+
+        KassaInterface.handleItems(receipt);
+        
+        String output = outContent.toString();
+
+        assertTrue(output.contains("Cancelled purchase"));
+
+    }
+
+    @Test
+    void customer_CanContinueToPayment(){
+
+        provideInput("6");
+
+        KassaInterface.handleItems(receipt);
+        
+        String output = outContent.toString();
+
+        assertTrue(output.contains("Continues to payment"));
+
+    }
+
     /*@BeforeEach
     void setUp() throws Exception {
         Customer customer = new Customer("12345", "Alice", "234567", "mail");
