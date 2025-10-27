@@ -95,6 +95,7 @@ public class Receipt {
         sb.append("----------------------------\n");
         sb.append(String.format("%-20s %s\n", "Total:", calculateTotal()));
 
-        return sb.toString();
+        String res = sb.toString();
+        return res;
     }
 }
