@@ -1,6 +1,6 @@
 package com.grupp09.kassasystem;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
 
@@ -21,6 +21,8 @@ public class KassaInterfaceTest {
         provideInput("Name");
         provideInput("Phone number");
         provideInput("Mail");
+
+        assertTrue("Customer registered");
     }
 
     @Test
