@@ -17,15 +17,24 @@ public class ReceiptItem {
         return unit;
     }
 
+    public Money getPledgeValue() {
+        if (item instanceof FixedPriceItem fixedPriceItem) {
+           return Pledge.pledgeOf(fixedPriceItem);
+        }
+        return null;
+    }
+
     // Subtotal beräknas med kvantitet som skickas in från Receipt
     public Money getSubTotal(double quantity) {
         return item.getTotalPrice(quantity, unit);
     }
 
     public String getDescription(double quantity) {
-        if (unit == null) {
+        if (unit == null && (item.getItemGroup() == ItemGroups.DRYCK || item.getItemGroup() == ItemGroups.DRYCK_ALKOHOL)) {
+            return item.getItemName() + " x" + (int) quantity + "\n Pant: " + getPledgeValue();
+        } else if (unit == null) {
             return item.getItemName() + " x" + (int) quantity;
-        } else {
+        } else  {
             return item.getItemName() + " " + quantity + " " + unit;
         }
     }

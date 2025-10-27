@@ -65,6 +65,22 @@ public class Receipt {
         for (ReceiptItem ri : items) {
             double quantity = nrOfItemsByName.get(ri);
             total = total.add(ri.getSubTotal(quantity));
+            if (ri.getPledgeValue() != null) {
+                total = total.add(ri.getPledgeValue());
+            }
+        }
+
+        return total;
+    }
+
+    //metod skriven av AI
+    public Money calculateTotalWithDiscount() {
+        Money total = calculateTotal();
+
+        if (customer != null && customer.getMembership() != null) {
+            // Exempel: 10% rabatt
+            double discountRate = 0.10; // 10% rabatt
+            return total.multiply(1 - discountRate);
         }
 
         return total;
@@ -74,13 +90,17 @@ public class Receipt {
         System.out.println(createReceipt());
     }
 
+    // delen med discount skriven av AI
     String createReceipt() {
         StringBuilder sb = new StringBuilder();
         sb.append("Receipt\n");
         sb.append("####################\n");
 
-        if(customer != null) {
+        if (customer != null) {
             sb.append("Customer: ").append(customer.getName()).append("\n");
+            if (customer.getMembership() != null) {
+                sb.append("Membership: ").append(customer.getMembership().getName()).append("\n");
+            }
             sb.append("####################\n");
         }
 
@@ -93,7 +113,13 @@ public class Receipt {
         }
 
         sb.append("----------------------------\n");
-        sb.append(String.format("%-20s %s\n", "Total:", calculateTotal()));
+        Money total = calculateTotal();
+        Money discountedTotal = calculateTotalWithDiscount();
+        sb.append(String.format("%-20s %s\n", "Total:", total));
+
+        if (!total.equals(discountedTotal)) {
+            sb.append(String.format("%-20s %s\n", "Discounted Total:", discountedTotal));
+        }
 
         return sb.toString();
     }
