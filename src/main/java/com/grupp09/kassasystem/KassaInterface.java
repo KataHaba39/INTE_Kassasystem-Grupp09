@@ -1,17 +1,25 @@
 package com.grupp09.kassasystem;
 
+import java.util.Scanner;
+
 public class KassaInterface {
-    public static final String NAME = "Name: ";
-    
-    static String readName() {
-        java.util.Scanner scanner = new java.util.Scanner(System.in);
-        System.out.print("Enter your name: ");
-        String name = scanner.nextLine();
-        return NAME.concat(name);
+    static Scanner input = new Scanner(System.in);
+    public static void main(String[] args) {
+        registerCustomer();
     }
 
-    public static void main(String[] args) {
-        String result = readName();
-        System.out.println(result);
+    private static Customer registerCustomer(){
+        System.out.println("Enter ID");
+        String id = input.nextLine();
+        System.out.println("Enter name");
+        String name = input.nextLine();
+        System.out.println("Enter phone number");
+        String phoneNumber = input.nextLine();
+        System.out.println("Enter mail");
+        String mail = input.nextLine();
+        Customer customer = new Customer(id, name, phoneNumber, mail);
+        System.out.println("Customer registered");
+
+        return customer;
     }
 }
