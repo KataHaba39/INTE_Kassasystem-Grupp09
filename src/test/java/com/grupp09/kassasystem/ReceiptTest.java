@@ -18,7 +18,7 @@ class ReceiptTest {
         Customer memberCustomer = new Customer("C010", "Carl Carlson", "2616212", "mail");
         memberCustomer.setMembership(membership);
 
-        ReceiptWithGPT receipt = new ReceiptWithGPT(memberCustomer);
+        Receipt receipt = new Receipt(memberCustomer);
 
         Item milk = new FixedPriceItem("Milk", Money.toMoney(20), ItemGroups.MEJERI);
         receipt.addItem(milk, 2, null); // Totalt 40 SEK
@@ -39,7 +39,7 @@ class ReceiptTest {
     @Test
     void testAddFixedPriceItem() {
         Customer customer = new Customer("TEST001", "Test Customer");
-        ReceiptWithGPT receipt = new ReceiptWithGPT(customer);
+        Receipt receipt = new Receipt(customer);
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
 
         receipt.addItem(milk, 2, null); // 2 st milk
@@ -52,7 +52,7 @@ class ReceiptTest {
     @Test
     void testAddWeightedItemsDifferentUnits() {
         Customer customer = new Customer("TEST002", "Test Customer 2");
-        ReceiptWithGPT receipt = new ReceiptWithGPT(customer);
+        Receipt receipt = new Receipt(customer);
         Item appleKg = new WeightedItem("Apple", Money.toMoney(50), WeightUnit.KILO, ItemGroups.FRUKT_GRONT);
         Item appleG = new WeightedItem("Apple", Money.toMoney(50), WeightUnit.KILO, ItemGroups.FRUKT_GRONT);
 
@@ -67,7 +67,7 @@ class ReceiptTest {
     @Test
     void testRemoveItemPartialQuantity() {
         Customer customer = new Customer("TEST003", "Test Customer 3");
-        ReceiptWithGPT receipt = new ReceiptWithGPT(customer);
+        Receipt receipt = new Receipt(customer);
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
 
         receipt.addItem(milk, 5, null);
@@ -80,7 +80,7 @@ class ReceiptTest {
     @Test
     void testRemoveItemEntireQuantity() {
         Customer customer = new Customer("TEST004", "Test Customer 4");
-        ReceiptWithGPT receipt = new ReceiptWithGPT(customer);
+        Receipt receipt = new Receipt(customer);
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
 
         receipt.addItem(milk, 3, null);
@@ -94,7 +94,7 @@ class ReceiptTest {
     @Test
     void testRemoveNonExistingItemThrows() {
         Customer customer = new Customer("TEST005", "Test Customer 5");
-        ReceiptWithGPT receipt = new ReceiptWithGPT(customer);
+        Receipt receipt = new Receipt(customer);
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
 
         assertThrows(NoSuchElementException.class, () -> receipt.removeItem(milk, 1, null));
@@ -103,7 +103,7 @@ class ReceiptTest {
     @Test
     void testReceiptOrderPreserved() {
         Customer customer = new Customer("TEST006", "Test Customer 6");
-        ReceiptWithGPT receipt = new ReceiptWithGPT(customer);
+        Receipt receipt = new Receipt(customer);
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
         Item bread = new FixedPriceItem("Bread", Money.toMoney(15), ItemGroups.BROD);
 
@@ -117,7 +117,7 @@ class ReceiptTest {
     @Test
     void testReceiptWithCustomer() {
         Customer customer = new Customer("C001", "Anna Andersson", "0701234567", "anna@example.com");
-        ReceiptWithGPT receipt = new ReceiptWithGPT(customer);
+        Receipt receipt = new Receipt(customer);
 
         assertEquals(customer, receipt.getCustomer());
         assertEquals("Anna Andersson", receipt.getCustomer().getName());
@@ -149,7 +149,7 @@ class ReceiptTest {
     @Test
     void testReceiptWithNullCustomer() {
         // Test med null customer (om det ska vara möjligt)
-        ReceiptWithGPT receipt = new ReceiptWithGPT(null);
+        Receipt receipt = new Receipt(null);
 
         assertNull(receipt.getCustomer());
 
@@ -168,7 +168,7 @@ class ReceiptTest {
         Customer customer1 = new Customer("C001", "Anna");
         Customer customer2 = new Customer("C002", "Bengt");
 
-        ReceiptWithGPT receipt1 = new ReceiptWithGPT(customer1);
+        Receipt receipt1 = new Receipt(customer1);
         ReceiptWithGPT receipt2 = new ReceiptWithGPT(customer2);
 
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
