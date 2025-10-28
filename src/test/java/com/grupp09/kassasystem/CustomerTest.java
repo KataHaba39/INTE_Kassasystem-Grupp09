@@ -6,13 +6,19 @@ import static org.junit.jupiter.api.Assertions.*;
 class CustomerTest {
 
     @Test
-    void customerShouldStoreProvidedData() {
-        Customer c = new Customer("0000", "Assil Aldabak", "0046701234567", "Assil@gmail.com");
+    void customerShouldStoreProvidedData() { // Testfall 1
+        Customer testCustomer = new Customer("0000", "Assil Aldabak", "0046701234567", "Assil@gmail.com");
         
-        assertEquals("0000", c.getCustomerId());
-        assertEquals("Assil Aldabak", c.getName());
-        assertEquals("0046701234567", c.getPhoneNumber());
-        assertEquals("Assil@gmail.com", c.getEmail());
+        assertEquals("0000", testCustomer.getCustomerId());
+        assertEquals("Assil Aldabak", testCustomer.getName());
+        assertEquals("0046701234567", testCustomer.getPhoneNumber());
+        assertEquals("Assil@gmail.com", testCustomer.getEmail());
+    }
+
+    @Test
+    void nameContainsNumber_throwsException() { // Testfall 8
+        assertThrows(IllegalArgumentException.class, 
+        () -> new Customer("0000", "Enes1 23abc", "0046707714683", "enescelik@gmail.com"));
     }
 
     @Test
@@ -87,5 +93,4 @@ class CustomerTest {
         assertTrue(c.hasMembership());
         assertEquals(m, c.getMembership());
     }
-
 }
