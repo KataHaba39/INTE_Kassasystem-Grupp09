@@ -42,7 +42,7 @@ public class KassaInterfaceTest {
         provideInput(simulatedInput);
 
         // Kör hela programmet
-        //KassaInterface.main(new String[]{});
+        // KassaInterface.main(new String[]{});
         KassaInterface.registerCustomer();
 
         // Läs all output
@@ -57,20 +57,20 @@ public class KassaInterfaceTest {
     }
 
     @Test
-    void customer_canCancelAfterRegistration(){
+    void customer_canCancelAfterRegistration() {
         provideInput("2");
 
-        //KassaInterface.main(new String[]{});
+        // KassaInterface.main(new String[]{});
         KassaInterface.customerContinuesPurchase();
 
         String output = outContent.toString();
 
         assertTrue(output.contains("Purchase cancelled"));
     }
-    
+
     @Test
-    void canAddItem(){
-        provideInput("1");
+    void canAddItem() {
+        provideInput("1\n5");
 
         KassaInterface.handleItems(receipt);
 
@@ -80,25 +80,25 @@ public class KassaInterfaceTest {
     }
 
     @Test
-    void canRemoveItem(){
+    void canRemoveItem() {
         receipt.addItem(new FixedPriceItem("Milk", Money.toMoney(12.0d), ItemGroups.MEJERI), 1, null);
 
-        provideInput("2");
+        provideInput("2\n5");
 
         KassaInterface.handleItems(receipt);
-        
+
         String output = outContent.toString();
 
         assertTrue(output.contains("Product was removed"));
     }
 
     @Test
-    void customer_CanCancelwhenHandlingItems(){
+    void customer_CanCancelwhenHandlingItems() {
 
         provideInput("5");
 
         KassaInterface.handleItems(receipt);
-        
+
         String output = outContent.toString();
 
         assertTrue(output.contains("Cancelled purchase"));
@@ -106,13 +106,13 @@ public class KassaInterfaceTest {
     }
 
     @Test
-    void customer_CanContinueToPayment(){
+    void customer_CanContinueToPayment() {
         receipt.addItem(new FixedPriceItem("Milk", Money.toMoney(12.0d), ItemGroups.MEJERI), 1, null);
 
-        provideInput("6\n3\n");
+        provideInput("6");
 
         KassaInterface.handleItems(receipt);
-        
+
         String output = outContent.toString();
 
         assertTrue(output.contains("Continues to payment"));
@@ -120,13 +120,13 @@ public class KassaInterfaceTest {
     }
 
     @Test
-    void receiptWithZeroItems_canNotContinueToPayment(){
+    void receiptWithZeroItems_canNotContinueToPayment() {
         Receipt emptyReceipt = new Receipt(customer);
 
         provideInput("6");
 
         KassaInterface.handleItems(emptyReceipt);
-        
+
         String output = outContent.toString();
 
         assertTrue(output.contains("Error: Receipt must contain at least one items to continue"));
@@ -146,16 +146,16 @@ public class KassaInterfaceTest {
 
     @Test
     void cashPayment_exactAmount() {
-         receipt.addItem(new FixedPriceItem("Milk", Money.toMoney(12.0d), ItemGroups.MEJERI), 1, null);
+        receipt.addItem(new FixedPriceItem("Milk", Money.toMoney(12.0d), ItemGroups.MEJERI), 1, null);
 
-         provideInput("1\n12.00\n");
+        provideInput("1\n12.00\n");
 
-         KassaInterface.handlePayment(receipt);
+        KassaInterface.handlePayment(receipt);
 
-         String output = outContent.toString();
+        String output = outContent.toString();
 
-         assertTrue(output.contains("Total amount to pay: 12.00 SEK"));
-         assertTrue(output.contains("Payment was successful!"));
+        assertTrue(output.contains("Total amount to pay: 12.00 SEK"));
+        assertTrue(output.contains("Payment was successful!"));
     }
 
     @Test
@@ -200,61 +200,61 @@ public class KassaInterfaceTest {
 
     @Test
     void cardOrSwishPayment_failAndCancel() {
-         receipt.addItem(new FixedPriceItem("Milk", Money.toMoney(15.0d), ItemGroups.MEJERI), 1, null);
+        receipt.addItem(new FixedPriceItem("Milk", Money.toMoney(15.0d), ItemGroups.MEJERI), 1, null);
 
-         provideInput("2\nn\n");
+        provideInput("2\nn\n");
 
-         String output = outContent.toString();
+        String output = outContent.toString();
 
-         
         assertFalse(output.contains("Payment failed!"));
         assertFalse(output.contains("Transaction cancelled"));
 
     }
 
-
-
-    /*@BeforeEach
-    void setUp() throws Exception {
-        Customer customer = new Customer("12345", "Alice", "234567", "mail");
-        Receipt receipt = new Receipt(customer);
-    }
-
-    @Test
-    void registerCustomer_worksCorrectly() {
-        provideInput("Customer ID");
-        provideInput("Name");
-        provideInput("Phone number");
-        provideInput("Mail");
-
-        String output = out.toS
-
-        assertTrue("Customer registered");
-    }
-
-    @Test
-    void test2() {
-
-    }
-    // Receipt - Customer
-    @Test
-    void testingCustomer() {
-    }
-
-    void provideInput(String data) {
-        ByteArrayInputStream testIn = new ByteArrayInputStream(data.getBytes());
-        System.setIn(testIn);
-    }
-
-    ByteArrayOutputStream provideOutput(){
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
-    }
-    @Test
-    void testingName() {
-        provideInput("Baeldung");
-        String input = KassaInterface.readName();
-        assertEquals("Name: Baeldung", input);
-    }
-*/
+    /*
+     * @BeforeEach
+     * void setUp() throws Exception {
+     * Customer customer = new Customer("12345", "Alice", "234567", "mail");
+     * Receipt receipt = new Receipt(customer);
+     * }
+     * 
+     * @Test
+     * void registerCustomer_worksCorrectly() {
+     * provideInput("Customer ID");
+     * provideInput("Name");
+     * provideInput("Phone number");
+     * provideInput("Mail");
+     * 
+     * String output = out.toS
+     * 
+     * assertTrue("Customer registered");
+     * }
+     * 
+     * @Test
+     * void test2() {
+     * 
+     * }
+     * // Receipt - Customer
+     * 
+     * @Test
+     * void testingCustomer() {
+     * }
+     * 
+     * void provideInput(String data) {
+     * ByteArrayInputStream testIn = new ByteArrayInputStream(data.getBytes());
+     * System.setIn(testIn);
+     * }
+     * 
+     * ByteArrayOutputStream provideOutput(){
+     * ByteArrayOutputStream out = new ByteArrayOutputStream();
+     * System.setOut(new PrintStream(out));
+     * }
+     * 
+     * @Test
+     * void testingName() {
+     * provideInput("Baeldung");
+     * String input = KassaInterface.readName();
+     * assertEquals("Name: Baeldung", input);
+     * }
+     */
 }

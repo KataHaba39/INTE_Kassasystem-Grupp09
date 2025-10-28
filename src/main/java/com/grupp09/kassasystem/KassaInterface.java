@@ -4,22 +4,26 @@ import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class KassaInterface {
-    private static Scanner input;
     private static Receipt receipt;
 
     public static void main(String[] args) {
         Customer customer = registerCustomer();
         boolean choice = customerContinuesPurchase();
-
+        boolean continueToPayment = false;
+        
         if (choice == true) {
             receipt = new Receipt(customer);
-            handleItems(receipt);
+            continueToPayment = handleItems(receipt);
         }
+
+        if(continueToPayment) {
+            handlePayment(receipt);
+        }   
 
     }
 
     static Customer registerCustomer() {
-        input = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
         System.out.println("Enter ID");
         String id = input.nextLine();
         System.out.println("Enter name");
@@ -30,14 +34,16 @@ public class KassaInterface {
         String mail = input.nextLine();
         Customer customer = new Customer(id, name, phoneNumber, mail);
         System.out.println("Customer registered");
+        input.close();
 
         return customer;
     }
 
     static boolean customerContinuesPurchase() {
-        input = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
         System.out.println("1 to continue, 2 to cancel");
         String choice = input.nextLine();
+        input.close();
 
         if (choice.equals("1")) {
             return true;
@@ -48,18 +54,19 @@ public class KassaInterface {
     }
 
     static boolean handleItems(Receipt receipt) {
-        input = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
         String itemChoice;
 
         do {
             System.out.println("1. Add Milk");
             System.out.println("2. Remove Milk");
-            System.out.println("3. Add Banan");
-            System.out.println("4. Remove Banan");
+            System.out.println("3. Add Banana");
+            System.out.println("4. Remove Banana");
             System.out.println("5. Cancel purchase");
             System.out.println("6. Go to payment");
 
             itemChoice = input.nextLine();
+
 
             switch (itemChoice) {
                 case "1":
@@ -79,20 +86,17 @@ public class KassaInterface {
                         return false;
                     }
                     System.out.println("Continues to payment");
-                    handlePayment(receipt);
-                    break;
+                    return true;
                 default:
                     break;
             }
-
-            return true;
-
-        } while (itemChoice != "5" || itemChoice != "6");
-
+        } while (!itemChoice.equals("5") && !itemChoice.equals("6"));
+        
+        return false;
     }
 
     static boolean handlePayment(Receipt receipt) {
-        input = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
         String paymentChoice;
 
         do {
@@ -163,7 +167,4 @@ public class KassaInterface {
             }
         }
     }
-
-
-
 }
