@@ -10,7 +10,7 @@ public class Customer {
     public Customer(String customerId, String name, String phoneNumber, String email, Membership membership) {
 
         if (customerId == null || customerId.isBlank()) {
-            throw new IllegalArgumentException("customerId kan inte tom");
+            throw new IllegalArgumentException("Customer ID can not be empty");
         }
 
         if (customerId.length() < 4 || customerId.length() > 8) {
@@ -22,13 +22,27 @@ public class Customer {
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Customer ID must contain only digits");
         }
-        
+
         if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("name kan inte tom");
+            throw new IllegalArgumentException("Name can not be empty");
         }
+
+        if (name.length() > 20) {
+            throw new IllegalArgumentException("Name can not be longer than 20 characters");
+        }
+
+        if (name.length() < 3 || !name.contains(" ")) {
+            throw new IllegalArgumentException("Name must be at least 3 characters long or contain a space");
+        }
+
         if (phoneNumber != null && !phoneNumber.matches("\\d+")) {
-            throw new IllegalArgumentException("ogiltig telefon nummer");
+            throw new IllegalArgumentException("Phone number must contain only digits");
         }
+
+        if (phoneNumber.length() != 13 || !phoneNumber.startsWith("0046")) {
+            throw new IllegalArgumentException("Phone number must be 13 digits long including country code with double zero or start with 0046");
+        }
+
 
         this.customerId = customerId;
         this.name = name;
