@@ -16,7 +16,7 @@ public class KassaInterfaceTest {
     private final InputStream originalIn = System.in;
     private final PrintStream originalOut = System.out;
     private ByteArrayOutputStream outContent;
-    private Customer customer = new Customer("12345", "Alice", "234567", "mail");
+    private Customer customer = new Customer("12345", "Alice Alicedotter", "0046707714683", "alicesmail@gmail.com");
     private Receipt receipt = new Receipt(customer);
 
     @BeforeEach
@@ -38,7 +38,7 @@ public class KassaInterfaceTest {
     @Test
     void testMainCustomerRegistration() {
         // Simulerad användarinmatning (alla steg direkt)
-        String simulatedInput = "145\nAnna\n0701234567\nanna@mail.com\n";
+        String simulatedInput = "1452\nAnna Annason\n0046701234567\nannaa@mail.com\n";
         provideInput(simulatedInput);
 
         // Kör hela programmet

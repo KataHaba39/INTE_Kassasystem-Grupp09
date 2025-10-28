@@ -14,8 +14,8 @@ class ReportTest {
     @Test
     void generateCustomerReportCreatesFile() throws IOException {
         List<Customer> customers = List.of(
-            new Customer("C001", "Assil", "0701234567", "Assil@gmail.com"),
-            new Customer("C002", "Namn", "0709876543", "Namn@gmail.com")
+            new Customer("1234", "Assil Aldabak", "0046701234567", "Assil@gmail.com"),
+            new Customer("2345", "Enes Celik", "0046709876543", "Namn@gmail.com")
         );
 
         Path tempFile = Files.createTempFile("customer-report", ".html");
@@ -75,9 +75,11 @@ class ReportTest {
         assertNull(best, "Om inga kvtton finns ska best customer vara null");
     }
 
-    @Test 
+    // Vi ska inte ha kund utan telefon eller email i systemet längre
+
+    /*@Test 
     void buildCustomerReportHtmlReplacesNullFieldsWithDash() {
-        Customer c = new Customer("C999", "Okänd");
+        Customer c = new Customer("9999", "Okänd kund", "0046777777777", "okandkund@gmail.com");
 
         String html = Report.buildCustomerReportHtml(List.of(c));
 
@@ -86,6 +88,6 @@ class ReportTest {
 
         assertTrue(html.contains("<td>-</td>"), "Null phone ska bli '-'");
         assertTrue(html.contains("<td>-</td>"), "Null email ska bli '-'");
-    }
+    }*/
 
 }

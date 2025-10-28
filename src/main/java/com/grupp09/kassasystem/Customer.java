@@ -41,7 +41,7 @@ public class Customer {
 
         if (phoneNumber.length() != 13 || !phoneNumber.startsWith("0046")) {
             throw new IllegalArgumentException(
-                    "Phone number must be 13 digits long including country code with double zero or start with 0046");
+                    "Phone number must be 13 digits long and start with country code '0046'");
         }
 
         if (email == null || email.isBlank()) {
@@ -80,12 +80,8 @@ public class Customer {
         this.membership = membership;
     }
 
-    public Customer(String customerId, String name, String phoneNumber, String email) { // phoneNumber int?
+    public Customer(String customerId, String name, String phoneNumber, String email) {
         this(customerId, name, phoneNumber, email, null);
-    }
-
-    public Customer(String customerId, String name) {
-        this(customerId, name, null, null, null);
     }
 
     public String getCustomerId() {

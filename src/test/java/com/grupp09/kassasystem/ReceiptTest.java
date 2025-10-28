@@ -15,7 +15,7 @@ class ReceiptTest {
     void testDiscountForMember() {
         // Skapa ett medlemskap, t.ex. med 10% rabatt
         Membership membership = new Membership("name", 10, 2616212, "home");
-        Customer memberCustomer = new Customer("C010", "Carl Carlson", "2616212", "mail");
+        Customer memberCustomer = new Customer("0000", "Carl Carlson", "0046707771111", "mailCarl@gmail.com");
         memberCustomer.setMembership(membership);
 
         Receipt receipt = new Receipt(memberCustomer);
@@ -38,7 +38,7 @@ class ReceiptTest {
 
     @Test
     void testAddFixedPriceItem() {
-        Customer customer = new Customer("TEST001", "Test Customer");
+        Customer customer = new Customer("01234", "Test Customer", "0046700000000", "testcustomer@gmail.com");
         Receipt receipt = new Receipt(customer);
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
 
@@ -51,7 +51,7 @@ class ReceiptTest {
 
     @Test
     void testAddWeightedItemsDifferentUnits() {
-        Customer customer = new Customer("TEST002", "Test Customer 2");
+        Customer customer = new Customer("00002", "Test Customerr", "0046700000001", "customer-test@gmail.com");
         Receipt receipt = new Receipt(customer);
         Item appleKg = new WeightedItem("Apple", Money.toMoney(50), WeightUnit.KILO, ItemGroups.FRUKT_GRONT);
         Item appleG = new WeightedItem("Apple", Money.toMoney(50), WeightUnit.KILO, ItemGroups.FRUKT_GRONT);
@@ -66,7 +66,7 @@ class ReceiptTest {
 
     @Test
     void testRemoveItemPartialQuantity() {
-        Customer customer = new Customer("TEST003", "Test Customer 3");
+        Customer customer = new Customer("0003", "Test Customerson", "0046700000002", "customerson@gmail.com");
         Receipt receipt = new Receipt(customer);
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
 
@@ -79,7 +79,7 @@ class ReceiptTest {
 
     @Test
     void testRemoveItemEntireQuantity() {
-        Customer customer = new Customer("TEST004", "Test Customer 4");
+        Customer customer = new Customer("0004", "Testsson Customer", "0046700000003", "customer__@gmail.com");
         Receipt receipt = new Receipt(customer);
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
 
@@ -93,7 +93,7 @@ class ReceiptTest {
 
     @Test
     void testRemoveNonExistingItemThrows() {
-        Customer customer = new Customer("TEST005", "Test Customer 5");
+        Customer customer = new Customer("0005", "Oskar Någonsson", "0046700000004", "oskarCrazy-boy@gmail.com");
         Receipt receipt = new Receipt(customer);
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
 
@@ -102,7 +102,7 @@ class ReceiptTest {
 
     @Test
     void testReceiptOrderPreserved() {
-        Customer customer = new Customer("TEST006", "Test Customer 6");
+        Customer customer = new Customer("0006", "Anton Antonsson", "0046700000005", "antonssonanton@gmail.com");
         Receipt receipt = new Receipt(customer);
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
         Item bread = new FixedPriceItem("Bread", Money.toMoney(15), ItemGroups.BROD);
@@ -116,12 +116,12 @@ class ReceiptTest {
 
     @Test
     void testReceiptWithCustomer() {
-        Customer customer = new Customer("C001", "Anna Andersson", "0701234567", "anna@example.com");
+        Customer customer = new Customer("1111", "Anna Andersson", "0046701234567", "anna@example.com");
         Receipt receipt = new Receipt(customer);
 
         assertEquals(customer, receipt.getCustomer());
         assertEquals("Anna Andersson", receipt.getCustomer().getName());
-        assertEquals("C001", receipt.getCustomer().getCustomerId());
+        assertEquals("1111", receipt.getCustomer().getCustomerId());
 
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
         receipt.addItem(milk, 1, null);
@@ -131,7 +131,7 @@ class ReceiptTest {
 
     @Test
     void testPrintReceiptWithCustomer() {
-        Customer customer = new Customer("C002", "Bengt Bengtsson");
+        Customer customer = new Customer("1212", "Bengt Bengtsson", "0046705556666", "bengtkungen@gmail.com");
         ReceiptWithGPT receipt = new ReceiptWithGPT(customer);
 
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
@@ -165,8 +165,8 @@ class ReceiptTest {
 
     @Test
     void testMultipleCustomerReceipts() {
-        Customer customer1 = new Customer("C001", "Anna");
-        Customer customer2 = new Customer("C002", "Bengt");
+        Customer customer1 = new Customer("0000", "Anna Andersson", "0046700000000", "andersson_anna@gmail.com");
+        Customer customer2 = new Customer("0001", "Bengt Bengtsson", "0046701111111", "bengy-baby@gmail.com");
 
         Receipt receipt1 = new Receipt(customer1);
         ReceiptWithGPT receipt2 = new ReceiptWithGPT(customer2);
@@ -176,15 +176,15 @@ class ReceiptTest {
         receipt1.addItem(milk, 1, null);
         receipt2.addItem(milk, 2, null);
 
-        assertEquals("Anna", receipt1.getCustomer().getName());
-        assertEquals("Bengt", receipt2.getCustomer().getName());
+        assertEquals("Anna Andersson", receipt1.getCustomer().getName());
+        assertEquals("Bengt Bengtsson", receipt2.getCustomer().getName());
         assertEquals(Money.toMoney(10), receipt1.calculateTotal());
         assertEquals(Money.toMoney(20), receipt2.calculateTotal());
     }
 
     @Test
     void calculateTotalReturnsCorrect_itemsWithPledge() {
-        Customer customer = new Customer("TEST001", "Test Customer");
+        Customer customer = new Customer("1111", "Test Customer", "0046700000000", "testcustomer@gmail.com");
         Receipt receipt = new Receipt(customer);
         Item cola = new FixedPriceItem("cola", Money.toMoney(10), ItemGroups.DRYCK);
 
@@ -197,7 +197,7 @@ class ReceiptTest {
     @Test
     void receiptWithPledge_printContainsPledgeRow() {
         // Test med null customer (om det ska vara möjligt)
-        Receipt receipt = new Receipt(new Customer("TEST001", "Test Customer"));
+        Receipt receipt = new Receipt(new Customer("1111", "Test Customer", "0046700000000", "testcustomer@gmail.com"));
 
         Item cola = new FixedPriceItem("cola", Money.toMoney(10), ItemGroups.DRYCK);
         receipt.addItem(cola, 1, null);
