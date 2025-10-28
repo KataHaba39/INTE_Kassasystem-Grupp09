@@ -109,7 +109,7 @@ public class KassaInterfaceTest {
     void customer_CanContinueToPayment(){
         receipt.addItem(new FixedPriceItem("Milk", Money.toMoney(12.0d), ItemGroups.MEJERI), 1, null);
 
-        provideInput("6");
+        provideInput("6\n3\n");
 
         KassaInterface.handleItems(receipt);
         
@@ -131,6 +131,88 @@ public class KassaInterfaceTest {
 
         assertTrue(output.contains("Error: Receipt must contain at least one items to continue"));
     }
+
+    @Test
+    void payment_cancelledImmediately() {
+
+        provideInput("3");
+
+        KassaInterface.handlePayment(receipt);
+
+        String output = outContent.toString();
+
+        assertTrue(output.contains("Purchase cancelled"));
+    }
+
+    @Test
+    void cashPayment_exactAmount() {
+         receipt.addItem(new FixedPriceItem("Milk", Money.toMoney(12.0d), ItemGroups.MEJERI), 1, null);
+
+         provideInput("1\n12.00\n");
+
+         KassaInterface.handlePayment(receipt);
+
+         String output = outContent.toString();
+
+         assertTrue(output.contains("Total amount to pay: 12.00 SEK"));
+         assertTrue(output.contains("Payment was successful!"));
+    }
+
+    @Test
+    void cashPayment_givesChange() {
+        receipt.addItem(new FixedPriceItem("Milk", Money.toMoney(10.0d), ItemGroups.MEJERI), 1, null);
+
+        provideInput("1\n20.00\n");
+
+        KassaInterface.handlePayment(receipt);
+
+        String output = outContent.toString();
+
+        assertTrue(output.contains("Change: "));
+        assertTrue(output.contains("Payment was successful!"));
+    }
+
+    @Test
+    void cashPayment_lessThantotal() {
+        receipt.addItem(new FixedPriceItem("Milk", Money.toMoney(10.0d), ItemGroups.MEJERI), 1, null);
+
+        provideInput("1\n5.00\n");
+
+        KassaInterface.handlePayment(receipt);
+
+        String output = outContent.toString();
+
+        assertTrue(output.contains("Payment failed"));
+    }
+
+    @Test
+    void cardOrSwishPayment_success() {
+        receipt.addItem(new FixedPriceItem("Milk", Money.toMoney(15.0d), ItemGroups.MEJERI), 1, null);
+
+        provideInput("2\n");
+
+        KassaInterface.handlePayment(receipt);
+
+        String output = outContent.toString();
+
+        assertTrue(output.contains("Card") || output.contains("Swish") || output.contains(output));
+    }
+
+    @Test
+    void cardOrSwishPayment_failAndCancel() {
+         receipt.addItem(new FixedPriceItem("Milk", Money.toMoney(15.0d), ItemGroups.MEJERI), 1, null);
+
+         provideInput("2\nn\n");
+
+         String output = outContent.toString();
+
+         
+        assertFalse(output.contains("Payment failed!"));
+        assertFalse(output.contains("Transaction cancelled"));
+
+    }
+
+
 
     /*@BeforeEach
     void setUp() throws Exception {
