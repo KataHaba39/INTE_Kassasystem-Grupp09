@@ -35,7 +35,8 @@ public class Customer {
             throw new IllegalArgumentException("Name must be at least 3 characters long or contain a space");
         }
 
-        char[] str = name.toCharArray();
+        String nameWithoutBlankSpace = name.replace(" ", "");
+        char[] str = nameWithoutBlankSpace.toCharArray();
         for (int i = 0; i < str.length; i++) {
             if (!Character.isLetter(str[i])) {
                 throw new IllegalArgumentException("Name must only contain letters");
