@@ -8,17 +8,28 @@ public class Customer {
     private Membership membership;
 
     public Customer(String customerId, String name, String phoneNumber, String email, Membership membership) {
-        
-        if(customerId == null || customerId.isBlank()) {
+
+        if (customerId == null || customerId.isBlank()) {
             throw new IllegalArgumentException("customerId kan inte tom");
         }
-        if(name == null || name.isBlank()) {
-            throw new IllegalArgumentException("name kan inte tom");
+
+        if (customerId.length() < 4 || customerId.length() > 8) {
+            throw new IllegalArgumentException("Customer ID must be between 4 and 8 digits");
         }
-         if(phoneNumber != null && !phoneNumber.matches("\\d+")) {
-            throw new IllegalArgumentException("ogiltig telefon nummer");
+
+        try {
+            Integer.parseInt(customerId);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Customer ID must contain only digits");
         }
         
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("name kan inte tom");
+        }
+        if (phoneNumber != null && !phoneNumber.matches("\\d+")) {
+            throw new IllegalArgumentException("ogiltig telefon nummer");
+        }
+
         this.customerId = customerId;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -26,7 +37,7 @@ public class Customer {
         this.membership = membership;
     }
 
-    public Customer (String customerId, String name, String phoneNumber, String email) { // phoneNumber int? 
+    public Customer(String customerId, String name, String phoneNumber, String email) { // phoneNumber int?
         this(customerId, name, phoneNumber, email, null);
     }
 
@@ -63,7 +74,7 @@ public class Customer {
     }
 
     public void activateMembership(Membership membership) {
-        if(this.email == null || this.phoneNumber == null) {
+        if (this.email == null || this.phoneNumber == null) {
             throw new IllegalStateException("Kan ej aktivera medlemskap utan kontakt information");
         }
         this.membership = membership;
@@ -71,12 +82,12 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" + 
-        "Id='" + customerId + '\'' + 
-        ", Name='" + name + '\'' +
-        ", Phone='" + phoneNumber + '\'' +
-        ", email='" + email + '\'' +
-        ", membership=" + (hasMembership() ? "Yes" : "No") +
-        '}';
+        return "Customer{" +
+                "Id='" + customerId + '\'' +
+                ", Name='" + name + '\'' +
+                ", Phone='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", membership=" + (hasMembership() ? "Yes" : "No") +
+                '}';
     }
 }
