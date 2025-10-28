@@ -7,36 +7,26 @@ class CustomerTest {
 
     @Test
     void customerShouldStoreProvidedData() {
-        Customer c = new Customer("C001", "Assil", "0701234567", "Assil@gmail.com");
+        Customer c = new Customer("0000", "Assil Aldabak", "0046701234567", "Assil@gmail.com");
         
-        assertEquals("C001", c.getCustomerId());
-        assertEquals("Assil", c.getName());
-        assertEquals("0701234567", c.getPhoneNumber());
+        assertEquals("0000", c.getCustomerId());
+        assertEquals("Assil Aldabak", c.getName());
+        assertEquals("0046701234567", c.getPhoneNumber());
         assertEquals("Assil@gmail.com", c.getEmail());
     }
 
     @Test
-    void customerWithoutContactInfoShouldHaveNullFields() {
-        Customer c = new Customer("C002", "Bob");
-
-        assertEquals("C002", c.getCustomerId());
-        assertEquals("Bob", c.getName());
-        assertNull(c.getPhoneNumber());
-        assertNull(c.getEmail());
-    }
-
-    @Test
     void toStringShouldContainNameAndId() {
-        Customer c = new Customer("C003", "Alex", "0700000000", "Alex@gmail.com");
+        Customer c = new Customer("0003", "Alex Aleksander", "0046720006666", "Alex@gmail.com");
         String text = c.toString();
 
         assertTrue(text.contains("Alex"));
-        assertTrue(text.contains("C003"));
+        assertTrue(text.contains("0003"));
     }
 
     @Test
     void customerShouldInitiallyHaveNoMembership() {
-        Customer c = new Customer("C004", "Maria");
+        Customer c = new Customer("1234", "Maria Mariasdotter", "0046777777777", "maria-swe@gmail.com");
 
         assertNull(c.getMembership());
         assertFalse(c.hasMembership());
@@ -44,7 +34,7 @@ class CustomerTest {
 
     @Test
     void customerShouldBeAbleToSetMembership() {
-        Customer c = new Customer("C005", "Erik");
+        Customer c = new Customer("0005", "Erik Eriksson", "0046707714683", "eriksson_erik@hotmail.com");
         Membership membership = new Membership("Erik Eriksson", 1, 123456789, "Borjarfjordsgatan 12");
 
         c.setMembership(membership);
@@ -56,7 +46,7 @@ class CustomerTest {
 
     @Test
     void customerWithMembershipShouldShowInToString() {
-        Customer c = new Customer("C006", "Lisa");
+        Customer c = new Customer("12334", "Lisa Andersson", "0046701122334", "anderssonlis@gmail.com");
         Membership membership = new Membership("Lisa Andersson", 2, 987654321, "Kistagårdsbäg 2");
         
         c.setMembership(membership);
@@ -67,7 +57,7 @@ class CustomerTest {
 
     @Test
     void customerWithoutMembershipShouldShowInToString() {
-        Customer c = new Customer("C007", "Johan");
+        Customer c = new Customer("0007", "Johan Elmander", "0046701234567", "elmander__johan@hotmail.com");
         String text = c.toString();
         
         assertTrue(text.contains("membership=No"));
@@ -76,30 +66,19 @@ class CustomerTest {
     @Test
     void customerConstructorWithMembershipShouldWork() {
         Membership membership = new Membership("Anna Svensson", 3, 555666777, "Valhallavägen 3");
-        Customer c = new Customer("C008", "Anna", "0701111111", "anna@gmail.com", membership);
+        Customer c = new Customer("0088", "Anna Svensson", "0046701111111", "anna@gmail.com", membership);
         
-        assertEquals("C008", c.getCustomerId());
-        assertEquals("Anna", c.getName());
-        assertEquals("0701111111", c.getPhoneNumber());
+        assertEquals("0088", c.getCustomerId());
+        assertEquals("Anna Svensson", c.getName());
+        assertEquals("0046701111111", c.getPhoneNumber());
         assertEquals("anna@gmail.com", c.getEmail());
         assertEquals(membership, c.getMembership());
         assertTrue(c.hasMembership());
     }
 
     @Test
-    void cannotActivateMembershipWithoutContactInfo() {
-        Customer c = new Customer("C300", "Jenna");
-
-        Membership m = new Membership("Silver", 42, 0707070707, "Silvergatan 3");
-
-        assertThrows(IllegalStateException.class, () -> {
-            c.activateMembership(m);
-        });
-    }
-
-    @Test
     void canActivateMembershipWhenContactInfoExists() {
-        Customer c = new Customer("C301", "Lania", "0703334444", "lania@gmail.com");
+        Customer c = new Customer("0931", "Lania Stark", "0046703334444", "laniaaa@gmail.com");
 
         Membership m = new Membership("Silver", 100, 0707070701, "kungsängen 3");
 
@@ -107,8 +86,6 @@ class CustomerTest {
 
         assertTrue(c.hasMembership());
         assertEquals(m, c.getMembership());
-
     }
-
 
 }

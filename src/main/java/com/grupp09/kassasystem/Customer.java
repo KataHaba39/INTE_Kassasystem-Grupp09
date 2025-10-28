@@ -8,17 +8,71 @@ public class Customer {
     private Membership membership;
 
     public Customer(String customerId, String name, String phoneNumber, String email, Membership membership) {
-        
-        if(customerId == null || customerId.isBlank()) {
-            throw new IllegalArgumentException("customerId kan inte tom");
+
+        if (customerId == null || customerId.isBlank()) {
+            throw new IllegalArgumentException("Customer ID can not be empty");
         }
-        if(name == null || name.isBlank()) {
-            throw new IllegalArgumentException("name kan inte tom");
+
+        if (customerId.length() < 4 || customerId.length() > 8) {
+            throw new IllegalArgumentException("Customer ID must be between 4 and 8 digits");
         }
-         if(phoneNumber != null && !phoneNumber.matches("\\d+")) {
-            throw new IllegalArgumentException("ogiltig telefon nummer");
+
+        try {
+            Integer.parseInt(customerId);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Customer ID must contain only digits");
         }
-        
+
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Name can not be empty");
+        }
+
+        if (name.length() > 20) {
+            throw new IllegalArgumentException("Name can not be longer than 20 characters");
+        }
+
+        if (name.length() < 3 || !name.contains(" ")) {
+            throw new IllegalArgumentException("Name must be at least 3 characters long or contain a space");
+        }
+
+        if (phoneNumber != null && !phoneNumber.matches("\\d+")) {
+            throw new IllegalArgumentException("Phone number must contain only digits");
+        }
+
+        if (phoneNumber.length() != 13 || !phoneNumber.startsWith("0046")) {
+            throw new IllegalArgumentException(
+                    "Phone number must be 13 digits long and start with country code '0046'");
+        }
+
+        if (email == null || email.isBlank()) {
+            throw new IllegalArgumentException("Email cannot be empty");
+        }
+
+        if (!email.contains("@")) {
+            throw new IllegalArgumentException("Email must contain '@'");
+        }
+
+        String[] emailParts = email.split("@");
+
+        if (emailParts.length != 2 || emailParts[0].isBlank() || emailParts[1].isBlank()) {
+            throw new IllegalArgumentException("Email must have a valid format before and after '@'");
+        }
+
+        String beforeAt = emailParts[0];
+        String afterAt = emailParts[1];
+
+        if (beforeAt.length() < 1 || beforeAt.length() > 15) {
+            throw new IllegalArgumentException("Email part before '@' must be between 1 and 15 characters long");
+        }
+
+        if (afterAt.length() < 5 || afterAt.length() > 20) {
+            throw new IllegalArgumentException("Email part after '@' must be between 5 and 20 characters long");
+        }
+
+        if (!afterAt.endsWith(".com")) {
+            throw new IllegalArgumentException("Email must end with '.com'");
+        }
+
         this.customerId = customerId;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -26,12 +80,8 @@ public class Customer {
         this.membership = membership;
     }
 
-    public Customer (String customerId, String name, String phoneNumber, String email) { // phoneNumber int? 
+    public Customer(String customerId, String name, String phoneNumber, String email) {
         this(customerId, name, phoneNumber, email, null);
-    }
-
-    public Customer(String customerId, String name) {
-        this(customerId, name, null, null, null);
     }
 
     public String getCustomerId() {
@@ -63,7 +113,7 @@ public class Customer {
     }
 
     public void activateMembership(Membership membership) {
-        if(this.email == null || this.phoneNumber == null) {
+        if (this.email == null || this.phoneNumber == null) {
             throw new IllegalStateException("Kan ej aktivera medlemskap utan kontakt information");
         }
         this.membership = membership;
@@ -71,12 +121,12 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" + 
-        "Id='" + customerId + '\'' + 
-        ", Name='" + name + '\'' +
-        ", Phone='" + phoneNumber + '\'' +
-        ", email='" + email + '\'' +
-        ", membership=" + (hasMembership() ? "Yes" : "No") +
-        '}';
+        return "Customer{" +
+                "Id='" + customerId + '\'' +
+                ", Name='" + name + '\'' +
+                ", Phone='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", membership=" + (hasMembership() ? "Yes" : "No") +
+                '}';
     }
 }

@@ -19,7 +19,6 @@ public class KassaInterface {
         if (continueToPayment) {
             handlePayment(receipt);
         }
-
     }
 
     static Customer registerCustomer() {

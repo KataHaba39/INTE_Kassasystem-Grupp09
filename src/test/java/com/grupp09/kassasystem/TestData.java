@@ -4,8 +4,8 @@ import java.util.List;
 
 public class TestData {
     
-    public static Customer customer(String id, String name) {
-        return new Customer(id,name, null, null);
+    public static Customer customer(String id, String name, String phoneNumber,  String email) {
+        return new Customer(id,name, phoneNumber, email);
     }
 
     public static Receipt receiptWithLineItems(Customer customer, String[] itemNames, double[] itemPrices) {
@@ -26,8 +26,8 @@ public class TestData {
 
 
     public static List<Receipt> exampleReceiptsTwoCustomers() {
-        Customer c1 = customer("C001", "Assil");
-        Customer c2 = customer("C002", "Jenna");
+        Customer c1 = customer("1234", "Assil Aldabak", "0046701234567", "Assil@gmail.com");
+        Customer c2 = customer("2345", "Enes Celik", "0046709876543", "Namn@gmail.com" );
 
         Receipt r1 = receiptWithLineItems(c1, new String[]{"Milk"}, new double[]{20.00});
 
@@ -37,13 +37,13 @@ public class TestData {
     }
 
     public static Receipt lowSpenderReceipt() {
-        Customer low = customer("C10", "Liten Kund");
+        Customer low = customer("2222", "Liten Kund", "0046701111222", "litenkund@gmail.com");
 
         return receiptWithLineItems(low, new String[]{"Apple", "Banana"}, new double[]{10.00, 5.00});
     }
 
     public static Receipt highSpenderReceipt() {
-        Customer high = customer("C20", "Stor Kund");
+        Customer high = customer("3333", "Stor Kund", "0046703333444", "storkund@gmail.com");
 
         return receiptWithLineItems(high, new String[]{"Steak", "Wine"}, new double[]{120.00, 230.00});
     }

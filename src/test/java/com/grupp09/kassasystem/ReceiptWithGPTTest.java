@@ -16,7 +16,7 @@ public class ReceiptWithGPTTest {
     void testDiscountForMember() {
         // Skapa ett medlemskap, t.ex. med 10% rabatt
         Membership membership = new Membership("name", 10, 2616212, "home");
-        Customer memberCustomer = new Customer("C010", "Carl Carlson", "2616212", "mail");
+        Customer memberCustomer = new Customer("1212", "Bengt Bengtsson", "0046705556666", "bengtkungen@gmail.com");
         memberCustomer.setMembership(membership);
 
         ReceiptWithGPT receipt = new ReceiptWithGPT(memberCustomer);
@@ -39,7 +39,7 @@ public class ReceiptWithGPTTest {
 
     @Test
     void testAddFixedPriceItem() {
-        Customer customer = new Customer("TEST001", "Test Customer");
+        Customer customer = new Customer("0000", "Anna Andersson", "0046700000000", "andersson_anna@gmail.com");
         ReceiptWithGPT receipt = new ReceiptWithGPT(customer);
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
 
@@ -52,7 +52,7 @@ public class ReceiptWithGPTTest {
 
     @Test
     void testAddWeightedItemsDifferentUnits() {
-        Customer customer = new Customer("TEST002", "Test Customer 2");
+        Customer customer = new Customer("0000", "Anna Andersson", "0046700000000", "andersson_anna@gmail.com");
         ReceiptWithGPT receipt = new ReceiptWithGPT(customer);
         Item appleKg = new WeightedItem("Apple", Money.toMoney(50), WeightUnit.KILO, ItemGroups.FRUKT_GRONT);
         Item appleG = new WeightedItem("Apple", Money.toMoney(50), WeightUnit.KILO, ItemGroups.FRUKT_GRONT);
@@ -67,7 +67,7 @@ public class ReceiptWithGPTTest {
 
     @Test
     void testRemoveItemPartialQuantity() {
-        Customer customer = new Customer("TEST003", "Test Customer 3");
+        Customer customer = new Customer("0000", "Anna Andersson", "0046700000000", "andersson_anna@gmail.com");
         ReceiptWithGPT receipt = new ReceiptWithGPT(customer);
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
 
@@ -80,7 +80,7 @@ public class ReceiptWithGPTTest {
 
     @Test
     void testRemoveItemEntireQuantity() {
-        Customer customer = new Customer("TEST004", "Test Customer 4");
+        Customer customer = new Customer("0000", "Anna Andersson", "0046700000000", "andersson_anna@gmail.com");
         ReceiptWithGPT receipt = new ReceiptWithGPT(customer);
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
 
@@ -94,7 +94,7 @@ public class ReceiptWithGPTTest {
 
     @Test
     void testRemoveNonExistingItemThrows() {
-        Customer customer = new Customer("TEST005", "Test Customer 5");
+        Customer customer = new Customer("0000", "Anna Andersson", "0046700000000", "andersson_anna@gmail.com");
         ReceiptWithGPT receipt = new ReceiptWithGPT(customer);
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
 
@@ -103,7 +103,7 @@ public class ReceiptWithGPTTest {
 
     @Test
     void testReceiptOrderPreserved() {
-        Customer customer = new Customer("TEST006", "Test Customer 6");
+        Customer customer = new Customer("0000", "Anna Andersson", "0046700000000", "andersson_anna@gmail.com");
         ReceiptWithGPT receipt = new ReceiptWithGPT(customer);
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
         Item bread = new FixedPriceItem("Bread", Money.toMoney(15), ItemGroups.BROD);
@@ -117,12 +117,12 @@ public class ReceiptWithGPTTest {
 
     @Test
     void testReceiptWithCustomer() {
-        Customer customer = new Customer("C001", "Anna Andersson", "0701234567", "anna@example.com");
+        Customer customer = new Customer("0001", "Anna Andersson", "0046701234567", "annaaa@example.com");
         ReceiptWithGPT receipt = new ReceiptWithGPT(customer);
 
         assertEquals(customer, receipt.getCustomer());
         assertEquals("Anna Andersson", receipt.getCustomer().getName());
-        assertEquals("C001", receipt.getCustomer().getCustomerId());
+        assertEquals("0001", receipt.getCustomer().getCustomerId());
 
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
         receipt.addItem(milk, 1, null);
@@ -132,7 +132,7 @@ public class ReceiptWithGPTTest {
 
     @Test
     void testPrintReceiptWithCustomer() {
-        Customer customer = new Customer("C002", "Bengt Bengtsson");
+        Customer customer = new Customer("0000", "Anna Andersson", "0046700000000", "andersson_anna@gmail.com");
         ReceiptWithGPT receipt = new ReceiptWithGPT(customer);
 
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
@@ -143,7 +143,7 @@ public class ReceiptWithGPTTest {
 
         // Kontrollera att kundens namn finns i kvittosträngen
         String receiptString = receipt.createReceipt();
-        assertTrue(receiptString.contains("Bengt Bengtsson"));
+        assertTrue(receiptString.contains("Anna Andersson"));
         assertTrue(receiptString.contains("Customer:"));
     }
 
@@ -166,8 +166,8 @@ public class ReceiptWithGPTTest {
 
     @Test
     void testMultipleCustomerReceipts() {
-        Customer customer1 = new Customer("C001", "Anna");
-        Customer customer2 = new Customer("C002", "Bengt");
+        Customer customer1 = new Customer("0000", "Anna Andersson", "0046700000000", "andersson_anna@gmail.com");
+        Customer customer2 = new Customer("1212", "Bengt Bengtsson", "0046705556666", "bengtkungen@gmail.com");
 
         ReceiptWithGPT receipt1 = new ReceiptWithGPT(customer1);
         ReceiptWithGPT receipt2 = new ReceiptWithGPT(customer2);
@@ -177,8 +177,8 @@ public class ReceiptWithGPTTest {
         receipt1.addItem(milk, 1, null);
         receipt2.addItem(milk, 2, null);
 
-        assertEquals("Anna", receipt1.getCustomer().getName());
-        assertEquals("Bengt", receipt2.getCustomer().getName());
+        assertEquals("Anna Andersson", receipt1.getCustomer().getName());
+        assertEquals("Bengt Bengtsson", receipt2.getCustomer().getName());
         assertEquals(Money.toMoney(10), receipt1.calculateTotal());
         assertEquals(Money.toMoney(20), receipt2.calculateTotal());
     }
