@@ -22,6 +22,12 @@ class CustomerTest {
     }
 
     @Test
+    void mailDoesNotEndWithDotCom(){ // Testfall 15
+        assertThrows(IllegalArgumentException.class, 
+        () -> new Customer("0000", "Namn Namn", "0046707714683", "namn@gmail.c"));
+    }
+
+    @Test
     void toStringShouldContainNameAndId() {
         Customer c = new Customer("0003", "Alex Aleksander", "0046720006666", "Alex@gmail.com");
         String text = c.toString();
