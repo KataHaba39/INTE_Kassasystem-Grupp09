@@ -1,23 +1,25 @@
 package com.grupp09.kassasystem;
 
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class KassaInterface {
-    private static Scanner input = new Scanner(System.in);
+    private static Scanner input;
     private static Receipt receipt;
 
     public static void main(String[] args) {
         Customer customer = registerCustomer();
         boolean choice = customerContinuesPurchase();
 
-        if (choice == true){
+        if (choice == true) {
             receipt = new Receipt(customer);
             handleItems(receipt);
         }
 
     }
 
-    static Customer registerCustomer(){
+    static Customer registerCustomer() {
+        input = new Scanner(System.in);
         System.out.println("Enter ID");
         String id = input.nextLine();
         System.out.println("Enter name");
@@ -32,22 +34,24 @@ public class KassaInterface {
         return customer;
     }
 
-    static boolean customerContinuesPurchase(){
+    static boolean customerContinuesPurchase() {
+        input = new Scanner(System.in);
         System.out.println("1 to continue, 2 to cancel");
         String choice = input.nextLine();
 
-        if(choice.equals("1")){
+        if (choice.equals("1")) {
             return true;
         }
-        
+
         System.out.println("Purchase cancelled");
         return false;
     }
 
-    static boolean handleItems(Receipt receipt){
+    static boolean handleItems(Receipt receipt) {
+        input = new Scanner(System.in);
         String itemChoice;
 
-        do{
+        do {
             System.out.println("1. Add Milk");
             System.out.println("2. Remove Milk");
             System.out.println("3. Add Banan");
@@ -70,20 +74,96 @@ public class KassaInterface {
                     System.out.println("Cancelled purchase");
                     return false;
                 case "6":
-                    if(receipt.getItems().isEmpty()){
+                    if (receipt.getItems().isEmpty()) {
                         System.out.println("Error: Receipt must contain at least one items to continue");
                         return false;
                     }
                     System.out.println("Continues to payment");
+                    handlePayment(receipt);
                     break;
                 default:
                     break;
             }
 
             return true;
-            
-        } while(itemChoice != "5" || itemChoice != "6");
-        
+
+        } while (itemChoice != "5" || itemChoice != "6");
 
     }
+
+    static boolean handlePayment(Receipt receipt) {
+        input = new Scanner(System.in);
+        String paymentChoice;
+
+        do {
+            System.out.println("Choose payment option");
+            System.out.println("1. Cash");
+            System.out.println("2. Card or Swish");
+            System.out.println("3. Purchase was cancelled");
+        
+            paymentChoice = input.nextLine();
+
+            switch (paymentChoice) {
+                case "1":
+                    return handleCashPayment(receipt, input);
+                case "2":
+                    return handleCardOrSwishPayment(receipt, input);
+                case "3":
+                    System.out.println("Purchase cancelled");
+                    return false;
+                default:
+                    System.out.println("Choose valid payment option");
+            }
+        } while (true);
+       
+    }
+
+    static boolean handleCashPayment(Receipt receipt, Scanner input) {
+        Money total = receipt.calculateTotal();
+        System.out.println("Total amount to pay: " + total);
+        
+        System.out.print("Enter amount paid: ");
+        BigDecimal paidValue = new BigDecimal(input.nextLine());
+        Money paid = Money.toMoney(paidValue);
+
+        int compare = paid.compareTo(total);
+
+        if(compare < 0) {
+            System.out.println("Payment failed. Amount entered was not enough");
+            return false;
+        } else if(compare > 0) {
+            Money change = paid.subtract(total);
+            System.out.println("Payment was successful! Change: " + change);
+            receipt.printReceipt();
+            return true;
+        } else {
+            System.out.println("Payment was successful!");
+            receipt.printReceipt();
+            return true; 
+        }
+    }
+
+    static boolean handleCardOrSwishPayment(Receipt receipt, Scanner input) {
+        System.out.println("Processing payment");
+
+        boolean success = Math.random() < 0.9;
+
+        if(success) {
+            System.out.println("Payment was succesful!");
+            receipt.printReceipt();
+            return true;
+        } else {
+            System.out.println("Payment failed! Try again (Y/N)?");
+            String retry = input.nextLine();
+            if(retry.equalsIgnoreCase("Y")) {
+                return handleCardOrSwishPayment(receipt, input);
+            } else {
+                System.out.println("Transaction cancelled.");
+                return false;
+            }
+        }
+    }
+
+
+
 }
