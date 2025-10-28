@@ -40,9 +40,38 @@ public class Customer {
         }
 
         if (phoneNumber.length() != 13 || !phoneNumber.startsWith("0046")) {
-            throw new IllegalArgumentException("Phone number must be 13 digits long including country code with double zero or start with 0046");
+            throw new IllegalArgumentException(
+                    "Phone number must be 13 digits long including country code with double zero or start with 0046");
         }
 
+        if (email == null || email.isBlank()) {
+            throw new IllegalArgumentException("Email cannot be empty");
+        }
+
+        if (!email.contains("@")) {
+            throw new IllegalArgumentException("Email must contain '@'");
+        }
+
+        String[] emailParts = email.split("@");
+
+        if (emailParts.length != 2 || emailParts[0].isBlank() || emailParts[1].isBlank()) {
+            throw new IllegalArgumentException("Email must have a valid format before and after '@'");
+        }
+
+        String beforeAt = emailParts[0];
+        String afterAt = emailParts[1];
+
+        if (beforeAt.length() < 1 || beforeAt.length() > 15) {
+            throw new IllegalArgumentException("Email part before '@' must be between 1 and 15 characters long");
+        }
+
+        if (afterAt.length() < 5 || afterAt.length() > 20) {
+            throw new IllegalArgumentException("Email part after '@' must be between 5 and 20 characters long");
+        }
+
+        if (!afterAt.endsWith(".com")) {
+            throw new IllegalArgumentException("Email must end with '.com'");
+        }
 
         this.customerId = customerId;
         this.name = name;
