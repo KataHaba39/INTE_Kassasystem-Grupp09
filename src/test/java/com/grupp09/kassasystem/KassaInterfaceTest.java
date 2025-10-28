@@ -189,7 +189,7 @@ public class KassaInterfaceTest {
     void cardOrSwishPayment_success() {
         receipt.addItem(new FixedPriceItem("Milk", Money.toMoney(15.0d), ItemGroups.MEJERI), 1, null);
 
-        provideInput("2\n");
+        provideInput("2");
 
         KassaInterface.handlePayment(receipt);
 

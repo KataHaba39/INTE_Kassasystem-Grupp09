@@ -10,15 +10,15 @@ public class KassaInterface {
         Customer customer = registerCustomer();
         boolean choice = customerContinuesPurchase();
         boolean continueToPayment = false;
-        
+
         if (choice == true) {
             receipt = new Receipt(customer);
             continueToPayment = handleItems(receipt);
         }
 
-        if(continueToPayment) {
+        if (continueToPayment) {
             handlePayment(receipt);
-        }   
+        }
 
     }
 
@@ -67,7 +67,6 @@ public class KassaInterface {
 
             itemChoice = input.nextLine();
 
-
             switch (itemChoice) {
                 case "1":
                     receipt.addItem(new FixedPriceItem("Milk", Money.toMoney(12.0d), ItemGroups.MEJERI), 1, null);
@@ -91,7 +90,7 @@ public class KassaInterface {
                     break;
             }
         } while (!itemChoice.equals("5") && !itemChoice.equals("6"));
-        
+
         return false;
     }
 
@@ -104,7 +103,7 @@ public class KassaInterface {
             System.out.println("1. Cash");
             System.out.println("2. Card or Swish");
             System.out.println("3. Purchase was cancelled");
-        
+
             paymentChoice = input.nextLine();
 
             switch (paymentChoice) {
@@ -119,47 +118,53 @@ public class KassaInterface {
                     System.out.println("Choose valid payment option");
             }
         } while (true);
-       
+
     }
 
     static boolean handleCashPayment(Receipt receipt, Scanner input) {
         Money total = receipt.calculateTotal();
         System.out.println("Total amount to pay: " + total);
-        
         System.out.print("Enter amount paid: ");
         BigDecimal paidValue = new BigDecimal(input.nextLine());
         Money paid = Money.toMoney(paidValue);
 
-        int compare = paid.compareTo(total);
-
-        if(compare < 0) {
+        PaymentMethod payment = new PaymentMethod("cash", total, paid);
+        if (!payment.isPaidEnough()) {
             System.out.println("Payment failed. Amount entered was not enough");
             return false;
-        } else if(compare > 0) {
+
+        } else if (paid.compareTo(total) > 0) {
             Money change = paid.subtract(total);
             System.out.println("Payment was successful! Change: " + change);
             receipt.printReceipt();
             return true;
+
         } else {
             System.out.println("Payment was successful!");
             receipt.printReceipt();
-            return true; 
+            return true;
         }
+    }
+
+    private static double random() {
+        return Math.random();
     }
 
     static boolean handleCardOrSwishPayment(Receipt receipt, Scanner input) {
         System.out.println("Processing payment");
+        boolean success = random() < 0.9;
 
-        boolean success = Math.random() < 0.9;
-
-        if(success) {
+        if (success) {
+            PaymentMethod payment = new PaymentMethod("card", receipt.calculateTotal(), receipt.calculateTotal());
             System.out.println("Payment was succesful!");
+            System.out.println(payment);
             receipt.printReceipt();
             return true;
+
         } else {
             System.out.println("Payment failed! Try again (Y/N)?");
             String retry = input.nextLine();
-            if(retry.equalsIgnoreCase("Y")) {
+            if (retry.equalsIgnoreCase("Y")) {
                 return handleCardOrSwishPayment(receipt, input);
             } else {
                 System.out.println("Transaction cancelled.");
