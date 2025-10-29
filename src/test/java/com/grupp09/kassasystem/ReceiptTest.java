@@ -132,7 +132,7 @@ class ReceiptTest {
     @Test
     void testPrintReceiptWithCustomer() {
         Customer customer = new Customer("1212", "Bengt Bengtsson", "0046705556666", "bengtkungen@gmail.com");
-        ReceiptWithGPT receipt = new ReceiptWithGPT(customer);
+        Receipt receipt = new Receipt(customer);
 
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
         receipt.addItem(milk, 2, null);
@@ -169,7 +169,7 @@ class ReceiptTest {
         Customer customer2 = new Customer("0001", "Bengt Bengtsson", "0046701111111", "bengy-baby@gmail.com");
 
         Receipt receipt1 = new Receipt(customer1);
-        ReceiptWithGPT receipt2 = new ReceiptWithGPT(customer2);
+        Receipt receipt2 = new Receipt(customer2);
 
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
 
