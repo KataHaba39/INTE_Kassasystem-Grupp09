@@ -12,7 +12,7 @@ public class Receipt {
 
     private final Map<ReceiptItem, Double> nrOfItemsByName = new HashMap<>();
     private final List<ReceiptItem> items = new ArrayList<>();
-    private Customer customer;
+    private final Customer customer;
 
     public Receipt(Customer customer) {
         this.customer = customer;
