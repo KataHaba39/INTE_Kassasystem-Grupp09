@@ -3,7 +3,7 @@ package com.grupp09.kassasystem;
 import java.math.BigDecimal;
 import java.util.Scanner;
 
-public class KassaInterface {
+public class CashRegister {
     private static Receipt receipt;
 
     public static void main(String[] args) {

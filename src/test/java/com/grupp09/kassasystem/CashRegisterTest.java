@@ -11,7 +11,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class KassaInterfaceTest {
+public class CashRegisterTest {
 
     private final InputStream originalIn = System.in;
     private final PrintStream originalOut = System.out;
@@ -42,8 +42,7 @@ public class KassaInterfaceTest {
         provideInput(simulatedInput);
 
         // Kör hela programmet
-        // KassaInterface.main(new String[]{});
-        KassaInterface.registerCustomer();
+        CashRegister.registerCustomer();
 
         // Läs all output
         String output = outContent.toString();
@@ -61,7 +60,7 @@ public class KassaInterfaceTest {
         provideInput("2");
 
         // KassaInterface.main(new String[]{});
-        KassaInterface.customerContinuesPurchase();
+        CashRegister.customerContinuesPurchase();
 
         String output = outContent.toString();
 
@@ -72,7 +71,7 @@ public class KassaInterfaceTest {
     void canAddItem() {
         provideInput("1\n5");
 
-        KassaInterface.handleItems(receipt);
+        CashRegister.handleItems(receipt);
 
         String output = outContent.toString();
 
@@ -85,7 +84,7 @@ public class KassaInterfaceTest {
 
         provideInput("2\n5");
 
-        KassaInterface.handleItems(receipt);
+        CashRegister.handleItems(receipt);
 
         String output = outContent.toString();
 
@@ -97,7 +96,7 @@ public class KassaInterfaceTest {
 
         provideInput("5");
 
-        KassaInterface.handleItems(receipt);
+        CashRegister.handleItems(receipt);
 
         String output = outContent.toString();
 
@@ -111,7 +110,7 @@ public class KassaInterfaceTest {
 
         provideInput("6");
 
-        KassaInterface.handleItems(receipt);
+        CashRegister.handleItems(receipt);
 
         String output = outContent.toString();
 
@@ -125,7 +124,7 @@ public class KassaInterfaceTest {
 
         provideInput("6");
 
-        KassaInterface.handleItems(emptyReceipt);
+        CashRegister.handleItems(emptyReceipt);
 
         String output = outContent.toString();
 
@@ -137,7 +136,7 @@ public class KassaInterfaceTest {
 
         provideInput("3");
 
-        KassaInterface.handlePayment(receipt);
+        CashRegister.handlePayment(receipt);
 
         String output = outContent.toString();
 
@@ -150,7 +149,7 @@ public class KassaInterfaceTest {
 
         provideInput("1\n12.00\n");
 
-        KassaInterface.handlePayment(receipt);
+        CashRegister.handlePayment(receipt);
 
         String output = outContent.toString();
 
@@ -164,7 +163,7 @@ public class KassaInterfaceTest {
 
         provideInput("1\n20.00\n");
 
-        KassaInterface.handlePayment(receipt);
+        CashRegister.handlePayment(receipt);
 
         String output = outContent.toString();
 
@@ -178,7 +177,7 @@ public class KassaInterfaceTest {
 
         provideInput("1\n5.00\n");
 
-        KassaInterface.handlePayment(receipt);
+        CashRegister.handlePayment(receipt);
 
         String output = outContent.toString();
 
@@ -191,7 +190,7 @@ public class KassaInterfaceTest {
 
         provideInput("2");
 
-        KassaInterface.handlePayment(receipt);
+        CashRegister.handlePayment(receipt);
 
         String output = outContent.toString();
 
