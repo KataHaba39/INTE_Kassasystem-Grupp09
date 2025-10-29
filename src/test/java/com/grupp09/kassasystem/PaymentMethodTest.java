@@ -32,6 +32,18 @@ public class PaymentMethodTest {
     }
 
     @Test
+    void totalAmount_returnsCorrectValue() {
+        PaymentMethod payment = new PaymentMethod("swish", Money.toMoney(150), Money.toMoney(150));
+        assertEquals(payment.getTotalAmount(), Money.toMoney(150));
+    }
+
+    @Test
+    void amountPaid_returnsCorrectValue() {
+        PaymentMethod payment = new PaymentMethod("cash", Money.toMoney(120), Money.toMoney(150));
+        assertEquals(payment.getAmountPaid(), Money.toMoney(150));
+    }
+
+    @Test
     void cashPayment_getChange() {
         Money total = Money.toMoney(100.0);
         Money paid = Money.toMoney(150.0);
