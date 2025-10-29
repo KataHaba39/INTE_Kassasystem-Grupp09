@@ -33,7 +33,6 @@ public class KassaInterface {
         String mail = input.nextLine();
         Customer customer = new Customer(id, name, phoneNumber, mail);
         System.out.println("Customer registered");
-        input.close();
 
         return customer;
     }
@@ -42,7 +41,6 @@ public class KassaInterface {
         Scanner input = new Scanner(System.in);
         System.out.println("1 to continue, 2 to cancel");
         String choice = input.nextLine();
-        input.close();
 
         if (choice.equals("1")) {
             return true;
