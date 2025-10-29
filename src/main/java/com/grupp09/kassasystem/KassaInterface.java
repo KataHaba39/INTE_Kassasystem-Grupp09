@@ -55,12 +55,7 @@ public class KassaInterface {
         String itemChoice;
 
         do {
-            System.out.println("1. Add Milk");
-            System.out.println("2. Remove Milk");
-            System.out.println("3. Add Banana");
-            System.out.println("4. Remove Banana");
-            System.out.println("5. Cancel purchase");
-            System.out.println("6. Go to payment");
+            printMenu();
 
             itemChoice = input.nextLine();
 
@@ -89,6 +84,15 @@ public class KassaInterface {
         } while (!itemChoice.equals("5") && !itemChoice.equals("6"));
 
         return false;
+    }
+
+    private static void printMenu(){
+        System.out.println("1. Add Milk");
+        System.out.println("2. Remove Milk");
+        System.out.println("3. Add Banana");
+        System.out.println("4. Remove Banana");
+        System.out.println("5. Cancel purchase");
+        System.out.println("6. Go to payment");
     }
 
     static boolean handlePayment(Receipt receipt) {
