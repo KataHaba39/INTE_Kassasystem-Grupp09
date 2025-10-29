@@ -37,8 +37,8 @@ public class Customer {
 
         String nameWithoutBlankSpace = name.replace(" ", "");
         char[] str = nameWithoutBlankSpace.toCharArray();
-        for (int i = 0; i < str.length; i++) {
-            if (!Character.isLetter(str[i])) {
+        for (char c: str) {
+            if (!Character.isLetter(c)) {
                 throw new IllegalArgumentException("Name must only contain letters");
             }
         }
@@ -69,7 +69,7 @@ public class Customer {
         String beforeAt = emailParts[0];
         String afterAt = emailParts[1];
 
-        if (beforeAt.length() < 1 || beforeAt.length() > 15) {
+        if (beforeAt.length() > 15) {
             throw new IllegalArgumentException("Email part before '@' must be between 1 and 15 characters long");
         }
 
