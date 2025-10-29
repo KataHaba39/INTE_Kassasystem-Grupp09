@@ -55,12 +55,7 @@ public class KassaInterface {
         String itemChoice;
 
         do {
-            System.out.println("1. Add Milk");
-            System.out.println("2. Remove Milk");
-            System.out.println("3. Add Banana");
-            System.out.println("4. Remove Banana");
-            System.out.println("5. Cancel purchase");
-            System.out.println("6. Go to payment");
+            printItemMenu();
 
             itemChoice = input.nextLine();
 
@@ -91,15 +86,21 @@ public class KassaInterface {
         return false;
     }
 
+    private static void printItemMenu(){
+        System.out.println("1. Add Milk");
+        System.out.println("2. Remove Milk");
+        System.out.println("3. Add Banana");
+        System.out.println("4. Remove Banana");
+        System.out.println("5. Cancel purchase");
+        System.out.println("6. Go to payment");
+    }
+
     static boolean handlePayment(Receipt receipt) {
         Scanner input = new Scanner(System.in);
         String paymentChoice;
 
         do {
-            System.out.println("Choose payment option");
-            System.out.println("1. Cash");
-            System.out.println("2. Card or Swish");
-            System.out.println("3. Purchase was cancelled");
+            printPaymentMenu();
 
             paymentChoice = input.nextLine();
 
@@ -116,6 +117,13 @@ public class KassaInterface {
             }
         } while (true);
 
+    }
+
+    private static void printPaymentMenu(){
+        System.out.println("Choose payment option");
+        System.out.println("1. Cash");
+        System.out.println("2. Card or Swish");
+        System.out.println("3. Purchase was cancelled");
     }
 
     static boolean handleCashPayment(Receipt receipt, Scanner input) {
