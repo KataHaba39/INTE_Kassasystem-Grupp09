@@ -136,6 +136,8 @@ class ReceiptTest {
 
         Item milk = new FixedPriceItem("Milk", Money.toMoney(10), ItemGroups.MEJERI);
         receipt.addItem(milk, 2, null);
+        Item appleKg = new WeightedItem("Apple", Money.toMoney(50), WeightUnit.KILO, ItemGroups.FRUKT_GRONT);
+        receipt.addItem(appleKg, 1.0, WeightUnit.KILO);
 
         // Testa att kvittot skrivs ut utan fel
         assertDoesNotThrow(() -> receipt.printReceipt());
