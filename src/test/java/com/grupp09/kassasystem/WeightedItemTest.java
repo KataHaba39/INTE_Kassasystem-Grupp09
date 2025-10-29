@@ -105,4 +105,12 @@ class WeightedItemTest {
     void getSupplier_WhenNoSupplierAssigned_ShouldReturnNull() {
         assertNull(item.getSupplier());
     }
+
+    @Test 
+    void weightItem_equalsMethodWorksCorrectly(){
+        Money pricePerKg = Money.toMoney(100.0); 
+        WeightedItem orangeItem = new WeightedItem("Orange", pricePerKg, WeightUnit.KILO, ItemGroups.FRUKT_GRONT);
+
+        assertFalse(item.equals(orangeItem));
+    }
 }
