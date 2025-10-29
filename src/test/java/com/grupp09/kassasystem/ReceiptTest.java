@@ -207,4 +207,11 @@ class ReceiptTest {
         String receiptString = receipt.createReceipt();
         assertTrue(receiptString.contains("Pant: " + Money.toMoney(1).toString()));
     }
+
+    @Test
+    void getWeightUnit_ReceiptItem_returnsCorrect() {
+        Item appleKg = new WeightedItem("Apple", Money.toMoney(50), WeightUnit.KILO, ItemGroups.FRUKT_GRONT);
+        ReceiptItem ri = new ReceiptItem(appleKg, WeightUnit.KILO);
+        assertEquals(WeightUnit.KILO, ri.getUnit());
+    }
 }
