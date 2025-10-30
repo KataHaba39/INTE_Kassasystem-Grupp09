@@ -163,4 +163,23 @@ class SupplierTest {
         assertThrows(IllegalStateException.class, s::deActivate, "Leverantör med produkter ska inte kunna avaktiveras");
     }
 
+    @Test
+    void iterator_ShouldReturnAllItems() {
+        Supplier s = new Supplier("S010", "Arla", "Kontakt@arla.se");
+        Item i1 = new FixedPriceItem("Milk", Money.toMoney(10.0), ItemGroups.MEJERI);
+        Item i2 = new FixedPriceItem("Cheese", Money.toMoney(20.0), ItemGroups.MEJERI);
+
+        i1.setSupplier(s);
+        i2.setSupplier(s);
+        s.addItem(i1);
+        s.addItem(i2);
+
+        int count = 0;
+        for(Item item : s) {
+            assertNotNull(item);
+            count++;
+        }
+
+        assertEquals(2, count);
+    }
 }
