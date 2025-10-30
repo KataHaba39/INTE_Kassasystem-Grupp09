@@ -90,4 +90,30 @@ class ReportTest {
         assertTrue(html.contains("<td>-</td>"), "Null email ska bli '-'");
     }*/
 
+    @Test
+    void printCustomerReport_ShouldNotThrow() {
+        List<Customer> customers = List.of(new Customer("1111", " Jenna", "0046701234567", "anna@hotmail.com"));
+        assertDoesNotThrow(() -> Report.printCustomerReport(customers));
+    }
+
+    @Test
+    void printReceiptReport_ShouldNotThrow() {
+        List<Receipt> receipts = TestData.exampleReceiptsTwoCustomers();
+        assertDoesNotThrow(() -> Report.printReceiptReport(receipts));
+    }
+
+    @Test
+    void calculateTotalSales_ShouldReturnCorrectSum() {
+        List<Receipt> receipts = TestData.exampleReceiptsTwoCustomers();
+        Money total = Report.calculateTotalSales(receipts);
+        assertEquals(Money.toMoney(35.00), total);
+    }
+
+    @Test
+    void countTotalItems_ShouldReturnCorrectCount() {
+        List<Receipt> receipts = TestData.exampleReceiptsTwoCustomers();
+        int totalItems = Report.countTotalItems(receipts);
+        assertEquals(2, totalItems);
+    }
+
 }
