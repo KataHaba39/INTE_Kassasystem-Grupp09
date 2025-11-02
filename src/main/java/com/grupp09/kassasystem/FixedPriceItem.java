@@ -82,9 +82,6 @@ public class FixedPriceItem implements Item {
 
     @Override
     public int hashCode() {
-        int result = itemName != null ? itemName.hashCode() : 0;
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (itemGroup != null ? itemGroup.hashCode() : 0);
-        return result;
+        return java.util.Objects.hash(itemName, price, itemGroup);
     }
 }
