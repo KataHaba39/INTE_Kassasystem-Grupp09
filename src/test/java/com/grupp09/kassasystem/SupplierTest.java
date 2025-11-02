@@ -31,18 +31,26 @@ class SupplierTest {
 
     @Test
     void TestEmptySupplierIdThrowsError() {
-        Exception e = assertThrows(IllegalArgumentException.class, () -> {
-            new Supplier("", "Arla", "kontakt@arla.se");
-        });
+        Exception e = assertThrows(IllegalArgumentException.class, () ->
+                new Supplier("", "Arla", "kontakt@arla.se"));
         assertEquals("Leverantörs ID får ej vara tom", e.getMessage());
     }
 
     @Test
     void testEmptyNameThrowsError() {
-        Exception e = assertThrows(IllegalArgumentException.class, () -> {
-            new Supplier("S003", "  ", "kontakt@arla.se");
-        });
+        Exception e = assertThrows(IllegalArgumentException.class, () ->
+                new Supplier("S003", "  ", "kontakt@arla.se"));
         assertEquals("Leverantörers namn får ej vara tom", e.getMessage());
+    }
+
+    @Test
+    void constructor_ShouldThrowIfSupplierIsNull() {
+        assertThrows(IllegalArgumentException.class, () -> new Supplier(null, "Arla", "Kontakt@arla.se"));
+    }
+
+    @Test
+    void constructor_ShouldThrowIfNameisNull() {
+        assertThrows(IllegalArgumentException.class, () -> new Supplier("S001", null, "Kontakt@arla.se"));
     }
 
     @Test
@@ -119,6 +127,26 @@ class SupplierTest {
         j.setSupplier(s);
 
         assertFalse(s.removeItem(j), "Removing item not in supplier should fail");
+    }
+
+    @Test
+    void removeItem_WhenItemHasNoSupplier_ShouldReturnFalseIfNotInList() {
+        Supplier s = new Supplier("S123", "Coop", "info@coop.se");
+        Item i = new FixedPriceItem("Tomato", Money.toMoney(10.0), ItemGroups.FRUKT_GRONT);
+
+        assertFalse(s.removeItem(i));
+    }
+
+    @Test
+    void removeItem_ItemBelongsToAnotherSupplier_ShouldReturnFalse() {
+        Supplier s1 = new Supplier("S001", "Axfood", "info@axfood.se");
+        Supplier s2 = new Supplier("S002", "Coop", "info@coop.se");
+        Item i = new FixedPriceItem("Apple",  Money.toMoney(100.0), ItemGroups.FRUKT_GRONT);
+
+        i.setSupplier(s2);
+        s2.addItem(i);
+
+        assertFalse(s1.removeItem(i));
     }
 
     @Test
