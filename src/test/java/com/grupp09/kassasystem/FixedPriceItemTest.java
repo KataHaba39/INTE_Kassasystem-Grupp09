@@ -25,9 +25,23 @@ class FixedPriceItemTest {
     }
 
     @Test
+    void constructor_throwsException_nameIsEmptyString() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new FixedPriceItem("", Money.toMoney(50.0), ItemGroups.FRUKT_GRONT);
+        });
+    }
+
+    @Test
     void constructor_ShouldThrowException_WhenPriceIsNegative() {
         assertThrows(IllegalArgumentException.class, () -> {
             new FixedPriceItem("Banana", Money.toMoney(-50.0), ItemGroups.FRUKT_GRONT);
+        });
+    }
+
+    @Test
+    void constructor_ShouldThrowException_WhenPriceIsNull() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new FixedPriceItem("Banana", null, ItemGroups.FRUKT_GRONT);
         });
     }
 
@@ -116,4 +130,72 @@ class FixedPriceItemTest {
         assertNull(item.getSupplier(), "getSupplier should return null if no supplier assigned");
     }
 
+    @Test
+    void equals_returnsTrue_sameInstance() {
+        FixedPriceItem item = new FixedPriceItem("Apple", Money.toMoney(10), ItemGroups.FRUKT_GRONT);
+        assertTrue(item.equals(item));
+    }
+
+    @Test
+    void equals_returnsFalse_objectNotFixedPriceItem() {
+        FixedPriceItem item = new FixedPriceItem("Apple", Money.toMoney(10), ItemGroups.FRUKT_GRONT);
+        Object notItem = "Not an item";
+        assertFalse(item.equals(notItem));
+    }
+
+    @Test
+    void equals_returnsFalse_differentName() {
+        FixedPriceItem apple = new FixedPriceItem("Apple", Money.toMoney(10), ItemGroups.FRUKT_GRONT);
+        FixedPriceItem orange = new FixedPriceItem("Orange", Money.toMoney(10), ItemGroups.FRUKT_GRONT);
+        assertFalse(apple.equals(orange));
+    }
+
+    @Test
+    void equals_returnsFalse_differentPrice() {
+        FixedPriceItem appleCheap = new FixedPriceItem("Apple", Money.toMoney(10), ItemGroups.FRUKT_GRONT);
+        FixedPriceItem appleExpensive = new FixedPriceItem("Apple", Money.toMoney(15), ItemGroups.FRUKT_GRONT);
+        assertFalse(appleCheap.equals(appleExpensive));
+    }
+
+    @Test
+    void equals_returnsFalse_differentGroup() {
+        FixedPriceItem apple = new FixedPriceItem("Apple", Money.toMoney(10), ItemGroups.FRUKT_GRONT);
+        FixedPriceItem appleCandy = new FixedPriceItem("Apple", Money.toMoney(10), ItemGroups.GODIS);
+        assertFalse(apple.equals(appleCandy));
+    }
+
+    @Test
+    void equals_returnsTrue_allSameValues() {
+        FixedPriceItem i1 = new FixedPriceItem("Apple", Money.toMoney(10), ItemGroups.FRUKT_GRONT);
+        FixedPriceItem i2 = new FixedPriceItem("Apple", Money.toMoney(10), ItemGroups.FRUKT_GRONT);
+        assertTrue(i1.equals(i2));
+    }
+
+    @Test
+    void hashCode_sameValues_sameHash() {
+        FixedPriceItem i1 = new FixedPriceItem("Apple", Money.toMoney(10), ItemGroups.FRUKT_GRONT);
+        FixedPriceItem i2 = new FixedPriceItem("Apple", Money.toMoney(10), ItemGroups.FRUKT_GRONT);
+        assertEquals(i1.hashCode(), i2.hashCode());
+    }
+
+    @Test
+    void hashCode_differentName_differentHash() {
+        FixedPriceItem i1 = new FixedPriceItem("Apple", Money.toMoney(10), ItemGroups.FRUKT_GRONT);
+        FixedPriceItem i2 = new FixedPriceItem("Orange", Money.toMoney(10), ItemGroups.FRUKT_GRONT);
+        assertNotEquals(i1.hashCode(), i2.hashCode());
+    }
+
+    @Test
+    void hashCode_differentPrice_differentHash() {
+        FixedPriceItem i1 = new FixedPriceItem("Apple", Money.toMoney(10), ItemGroups.FRUKT_GRONT);
+        FixedPriceItem i2 = new FixedPriceItem("Apple", Money.toMoney(15), ItemGroups.FRUKT_GRONT);
+        assertNotEquals(i1.hashCode(), i2.hashCode());
+    }
+
+    @Test
+    void hashCode_differentGroup_differentHash() {
+        FixedPriceItem i1 = new FixedPriceItem("Apple", Money.toMoney(10), ItemGroups.FRUKT_GRONT);
+        FixedPriceItem i2 = new FixedPriceItem("Apple", Money.toMoney(10), ItemGroups.GODIS);
+        assertNotEquals(i1.hashCode(), i2.hashCode());
+    }
 }
