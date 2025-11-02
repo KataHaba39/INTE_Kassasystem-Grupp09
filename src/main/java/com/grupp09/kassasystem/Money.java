@@ -60,16 +60,12 @@ public class Money {
         }
 
         Money other = (Money) obj;
-
-        return this.value.compareTo(other.value) == 0 &&
-                this.getCurrency().equals(other.getCurrency());
+        return this.value.compareTo(other.value) == 0;
     }
 
     @Override
     public int hashCode() {
-        int result = value.stripTrailingZeros().hashCode();
-        result = 31 * result + CURRENCY.hashCode();
-        return result;
+        return value.stripTrailingZeros().hashCode();
     }
 
     public int compareTo(Money other) {
