@@ -197,7 +197,7 @@ class ReceiptTest {
     }
 
     @Test
-    void receiptWithPledge_printContainsPledgeRow() {
+    void receiptWithPledge_printContainsPledgeRow_DRYCK() {
         // Test med null customer (om det ska vara möjligt)
         Receipt receipt = new Receipt(new Customer("1111", "Test Customer", "0046700000000", "testcustomer@gmail.com"));
 
@@ -209,9 +209,62 @@ class ReceiptTest {
     }
 
     @Test
+    void receiptWithPledge_printContainsPledgeRow_ALKOHOL() {
+        // Test med null customer (om det ska vara möjligt)
+        Receipt receipt = new Receipt(new Customer("1111", "Test Customer", "0046700000000", "testcustomer@gmail.com"));
+
+        Item cola = new FixedPriceItem("smirnoff", Money.toMoney(10), ItemGroups.DRYCK_ALKOHOL);
+        receipt.addItem(cola, 1, null);
+
+        String receiptString = receipt.createReceipt();
+        assertTrue(receiptString.contains("Pant: " + Money.toMoney(2).toString()));
+    }
+
+    @Test
     void getWeightUnit_ReceiptItem_returnsCorrect() {
         Item appleKg = new WeightedItem("Apple", Money.toMoney(50), WeightUnit.KILO, ItemGroups.FRUKT_GRONT);
         ReceiptItem ri = new ReceiptItem(appleKg, WeightUnit.KILO);
         assertEquals(WeightUnit.KILO, ri.getUnit());
+    }
+
+    @Test
+    void equals_returnsFalse_objectNotReceiptItem() {
+        Item appleKg = new WeightedItem("Apple", Money.toMoney(50), WeightUnit.KILO, ItemGroups.FRUKT_GRONT);
+        ReceiptItem ri = new ReceiptItem(appleKg, WeightUnit.KILO);
+        assertFalse(ri.equals(appleKg));
+    }
+
+    @Test
+    void equals_returnsFalse_differentWeightUnit() {
+        Item appleKg = new WeightedItem("Apple", Money.toMoney(50), WeightUnit.KILO, ItemGroups.FRUKT_GRONT);
+        Item appleGr = new WeightedItem("Apple", Money.toMoney(50), WeightUnit.GRAM, ItemGroups.FRUKT_GRONT);
+        ReceiptItem riKg = new ReceiptItem(appleKg, WeightUnit.KILO);
+        ReceiptItem riGram = new ReceiptItem(appleGr, WeightUnit.GRAM);
+        assertFalse(riKg.equals(riGram));
+    }
+
+    @Test
+    void equals_returnsFalse_differentName() {
+        Item appleKg = new WeightedItem("Apple", Money.toMoney(50), WeightUnit.KILO, ItemGroups.FRUKT_GRONT);
+        Item orangeKg = new WeightedItem("Orange", Money.toMoney(50), WeightUnit.KILO, ItemGroups.FRUKT_GRONT);
+        ReceiptItem riApple = new ReceiptItem(appleKg, WeightUnit.KILO);
+        ReceiptItem riOrange = new ReceiptItem(orangeKg, WeightUnit.KILO);
+        assertFalse(riApple.equals(riOrange));
+    }
+
+    @Test
+    void equals_returnsFalse_allParametersDifferent() {
+        Item appleKg = new WeightedItem("Apple", Money.toMoney(50), WeightUnit.KILO, ItemGroups.FRUKT_GRONT);
+        Item orangeGram = new WeightedItem("Orange", Money.toMoney(50), WeightUnit.GRAM, ItemGroups.FRUKT_GRONT);
+        ReceiptItem riAppleKg = new ReceiptItem(appleKg, WeightUnit.KILO);
+        ReceiptItem riOrangeGram = new ReceiptItem(orangeGram, WeightUnit.GRAM);
+        assertFalse(riAppleKg.equals(riOrangeGram));
+    }
+
+    @Test
+    void equals_returnsTrue_allParametersSame() {
+        Item appleKg = new WeightedItem("Apple", Money.toMoney(50), WeightUnit.KILO, ItemGroups.FRUKT_GRONT);
+        ReceiptItem ri = new ReceiptItem(appleKg, WeightUnit.KILO);
+        assertTrue(ri.equals(ri));
     }
 }

@@ -41,9 +41,13 @@ public class ReceiptItem {
 
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof ReceiptItem)) return false;
+        if (!(other instanceof ReceiptItem)) {
+            return false;
+        }
         ReceiptItem o = (ReceiptItem) other;
-        return this.item.equals(o.item) && this.unit == o.unit;
+        boolean itemsEqual = this.item.equals(o.item);
+        boolean unitsEqual = this.unit == o.unit;
+        return itemsEqual && unitsEqual;
     }
 
     @Override
