@@ -106,6 +106,50 @@ class WeightedItemTest {
         assertNull(item.getSupplier());
     }
 
+    @Test
+    void equals_ShouldReturnTrue_forSameReference(){
+        assertTrue(item.equals(item));
+    }
+
+    @Test
+    void equals_ShouldReturnFalse_whenOtherIsNull(){
+        assertNotEquals(null, item);
+    }
+
+    @Test
+    void equals_ShouldReturnFalse_whenOtherHasDifferentType(){
+        assertFalse(item.equals("not weighted item"));
+    }
+
+    @Test
+    void equals_ShouldReturnTrue_WhenAllFieldsMatch() {
+        WeightedItem sameItem = new WeightedItem("Banana", pricePerKg, WeightUnit.KILO, ItemGroups.FRUKT_GRONT);
+        assertTrue(item.equals(sameItem));
+        assertTrue(sameItem.equals(item));
+    }
+
+    @Test
+    void equals_ShouldReturnFalse_WhenPriceDiffers() {
+        WeightedItem other = new WeightedItem("Banana", Money.toMoney(200.0),
+                WeightUnit.KILO, ItemGroups.FRUKT_GRONT);
+        assertFalse(item.equals(other));
+    }
+
+    @Test
+    void equals_ShouldReturnFalse_WhenWeightUnitDiffers() {
+        WeightedItem other = new WeightedItem("Banana", pricePerKg,
+                WeightUnit.GRAM, ItemGroups.FRUKT_GRONT);
+        assertFalse(item.equals(other));
+    }
+
+    @Test
+    void equals_ShouldReturnFalse_WhenItemGroupDiffers() {
+        WeightedItem other = new WeightedItem("Banana", pricePerKg,
+                WeightUnit.KILO, ItemGroups.MEJERI);
+        assertFalse(item.equals(other));
+    }
+
+
     @Test 
     void weightItem_equalsMethodWorksCorrectly(){
         Money pricePerKg = Money.toMoney(100.0); 
