@@ -114,7 +114,8 @@ public class CashRegister {
                     System.out.println("Purchase cancelled");
                     return false;
                 default:
-                    System.out.println("Choose valid payment option");
+                    System.out.println("Error: Choose valid payment option");
+                    return false;
             }
         } while (true);
 

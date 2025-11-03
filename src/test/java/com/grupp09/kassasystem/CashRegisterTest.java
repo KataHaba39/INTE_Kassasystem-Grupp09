@@ -139,7 +139,7 @@ public class CashRegisterTest {
     }
 
     @Test
-    void invalidInput_whenHandlingItems_doesNothing(){
+    void invalidInput_whenHandlingItems_givesErrorMessage(){
         Receipt emptyReceipt = new Receipt(customer);
 
         provideInput("7\n5");
@@ -161,6 +161,17 @@ public class CashRegisterTest {
         String output = outContent.toString();
 
         assertTrue(output.contains("Purchase cancelled"));
+    }
+
+    @Test
+    void invalidPaymentMethod_givesErrorMessage(){
+        provideInput("4");
+
+        CashRegister.handlePayment(receipt);
+
+        String output = outContent.toString();
+
+        assertTrue(output.contains("Error: Choose valid payment option"));
     }
 
     @Test
