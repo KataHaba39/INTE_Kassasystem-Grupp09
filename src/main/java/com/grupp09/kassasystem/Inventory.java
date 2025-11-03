@@ -1,4 +1,4 @@
-// Testklass med AI
+// Klass med AI
 
 package com.grupp09.kassasystem;
 
