@@ -70,11 +70,11 @@ public class CashRegister {
                     break;
                 case "5":
                     System.out.println("Cancelled purchase");
-                    return false;
+                    break;
                 case "6":
                     if (receipt.getItems().isEmpty()) {
                         System.out.println("Error: Receipt must contain at least one items to continue");
-                        return false;
+                        break;
                     }
                     System.out.println("Continues to payment");
                     return true;
