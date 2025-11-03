@@ -121,9 +121,6 @@ public class Customer {
     }
 
     public void activateMembership(Membership membership) {
-        if (this.email == null || this.phoneNumber == null) {
-            throw new IllegalStateException("Kan ej aktivera medlemskap utan kontakt information");
-        }
         this.membership = membership;
     }
 

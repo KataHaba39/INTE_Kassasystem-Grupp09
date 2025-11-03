@@ -145,4 +145,111 @@ class CustomerTest {
         assertTrue(c.hasMembership());
         assertEquals(m, c.getMembership());
     }
+
+    //Detta är genererat av ChatGpt
+    @Test
+    void nameWithoutSpace_throwsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer("1234", "Enes", "0046707777777", "enes@gmail.com"));
+    }
+
+    @Test
+    void nameTooShort_throwsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer("1234", "Al", "0046707777777", "al@gmail.com"));
+    }
+
+    @Test
+    void phoneNumberContainsLetters_throwsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer("1234", "Test Person", "0046abc1234567", "test@gmail.com"));
+    }
+
+    @Test
+    void phoneNumberWrongLength_throwsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer("1234", "Test Person", "004670123456", "test@gmail.com"));
+    }
+
+    @Test
+    void phoneNumberDoesNotStartWith0046_throwsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer("1234", "Test Person", "0045601234567", "test@gmail.com"));
+    }
+
+    @Test
+    void nullPhoneNumber_throwsNullPointer() {
+        assertThrows(NullPointerException.class,
+                () -> new Customer("1234", "Test Person", null, "test@gmail.com"));
+    }
+
+    @Test
+    void nullEmail_throwsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer("1234", "Test Person", "0046701234567", null));
+    }
+
+    @Test
+    void blankEmail_throwsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer("1234", "Test Person", "0046701234567", "   "));
+    }
+
+    @Test
+    void emailWithoutAt_throwsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer("1234", "Test Person", "0046701234567", "mailmail.com"));
+    }
+
+    @Test
+    void emailMissingPartBeforeAt_throwsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer("1234", "Test Person", "0046701234567", "@gmail.com"));
+    }
+
+    @Test
+    void emailMissingPartAfterAt_throwsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer("1234", "Test Person", "0046701234567", "user@"));
+    }
+
+    @Test
+    void emailPartBeforeAtTooLong_throwsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer("1234", "Test Person", "0046701234567", "averyveryverylongname@gmail.com"));
+    }
+
+    @Test
+    void emailPartAfterAtTooShort_throwsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer("1234", "Test Person", "0046701234567", "user@.com"));
+    }
+
+    @Test
+    void emailPartAfterAtTooLong_throwsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer("1234", "Test Person", "0046701234567", "user@averyveryveryverylongdomainname.com"));
+    }
+
+    @Test
+    void activateMembershipShouldAssignMembershipCorrectly() {
+        Customer c = new Customer("2222", "Test Person", "0046701111222", "testperson@gmail.com");
+        Membership m = new Membership("Silver", 1, 123456789, "Testgatan 1");
+
+        c.activateMembership(m);
+
+        assertEquals(m, c.getMembership());
+        assertTrue(c.hasMembership());
+    }
+
+    @Test
+    void activateMembershipWithNullMembershipShouldSetToNull() {
+        Customer c = new Customer("3333", "Test Person", "0046703334444", "testperson@gmail.com");
+        c.activateMembership(null);
+
+        assertNull(c.getMembership());
+        assertFalse(c.hasMembership());
+    }
+
 }
+
