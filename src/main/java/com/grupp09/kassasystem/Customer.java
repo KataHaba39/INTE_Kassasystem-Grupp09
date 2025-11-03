@@ -1,10 +1,10 @@
 package com.grupp09.kassasystem;
 
 public class Customer {
-    private String customerId;
-    private String name;
-    private String phoneNumber;
-    private String email;
+    private final String customerId;
+    private final String name;
+    private final String phoneNumber;
+    private final String email;
     private Membership membership;
 
     public Customer(String customerId, String name, String phoneNumber, String email, Membership membership) {
@@ -121,9 +121,6 @@ public class Customer {
     }
 
     public void activateMembership(Membership membership) {
-        if (this.email == null || this.phoneNumber == null) {
-            throw new IllegalStateException("Kan ej aktivera medlemskap utan kontakt information");
-        }
         this.membership = membership;
     }
 
