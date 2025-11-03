@@ -138,7 +138,7 @@ class CustomerTest {
     void canActivateMembershipWhenContactInfoExists() {
         Customer c = new Customer("0931", "Lania Stark", "0046703334444", "laniaaa@gmail.com");
 
-        Membership m = new Membership("Silver", 100, 0707070701, "kungsängen 3");
+        Membership m = new Membership("Silver", 100, 119304641, "kungsängen 3");
 
         c.activateMembership(m);
 
@@ -202,6 +202,12 @@ class CustomerTest {
     }
 
     @Test
+    void emailWithTwoAtSigns_throwsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer("5678", "Test Person", "0046709998888", "user@@gmail.com"));
+    }
+
+    @Test
     void emailMissingPartBeforeAt_throwsException() {
         assertThrows(IllegalArgumentException.class,
                 () -> new Customer("1234", "Test Person", "0046701234567", "@gmail.com"));
@@ -229,6 +235,13 @@ class CustomerTest {
     void emailPartAfterAtTooLong_throwsException() {
         assertThrows(IllegalArgumentException.class,
                 () -> new Customer("1234", "Test Person", "0046701234567", "user@averyveryveryverylongdomainname.com"));
+    }
+
+    @Test
+    void emailPartAfterAtIsBlank_throwsException() {
+        // Efter @ finns bara ett blanksteg → emailParts[1] = " "
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer("4321", "Test Person", "0046709876543", "user@ "));
     }
 
     @Test
