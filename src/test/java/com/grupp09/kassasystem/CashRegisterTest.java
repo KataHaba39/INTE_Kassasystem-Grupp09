@@ -56,6 +56,13 @@ public class CashRegisterTest {
     }
 
     @Test
+    void customer_canContinueAfterRegistration(){
+        provideInput("1");
+
+        assertTrue(CashRegister.customerContinuesPurchase());
+    }
+
+    @Test
     void customer_canCancelAfterRegistration() {
         provideInput("2");
 
