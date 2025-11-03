@@ -16,6 +16,52 @@ class CustomerTest {
     }
 
     @Test
+    void blankCustomerId_ThrowsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer(" ", "Enes Celik", "0046707777777", "enes@gmail.com"));
+    }
+
+    @Test
+    void nullCustomerId_ThrowsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer(null, "Enes Celik", "0046707777777", "ence@gmail.com"));
+    }
+
+    @Test
+    void customerId_lessThan4Digits_orMoreThan8Digits_ThrowsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer("123", "Enes Celik", "0046707777777", "mail@mail.com"));
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer("123456789", "Enes Celik", "0046707777777", "mail@mail.com"));
+    }
+
+    @Test
+    void customerIdContainsLetter_throwsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer("123a", "Enes Celik", "0046707777777", "mail@mail.com"));
+    }
+
+    @Test
+    void blankName_ThrowsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer("1234", "  ", "0046707777777", "mail@mail.com"));
+    }
+
+    @Test
+    void nullName_ThrowsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer("1234", null, "0046707777777", "mail@mail.com"));
+    }
+
+    @Test
+    void nameLongerThan_20Characters_ThrowsException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Customer("1234", "EnesEnes CelikCelikCelik", "0046707777777", "mail@mail.com"));
+    }
+
+
+
+    @Test
     void nameContainsNumber_throwsException() { // Testfall 8
         assertThrows(IllegalArgumentException.class, 
         () -> new Customer("0000", "Enes1 23abc", "0046707714683", "enescelik@gmail.com"));
