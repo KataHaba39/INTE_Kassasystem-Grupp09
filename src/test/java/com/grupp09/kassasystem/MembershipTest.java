@@ -29,12 +29,17 @@ public class MembershipTest {
     }
 
     @Test
+    void constructorRejects_nullName() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Membership(null, 12345, 5551234, "address"));
+    }
+
+    @Test
     void constructorRejects_when_idIs_Zero() {
         assertThrows(IllegalArgumentException.class,
                 () -> new Membership("namn", 0, 8987327, "address"));
     }
 
-    // Detta test ska ändras om vi ändrar phoneNumber till String
     @Test
     void constructorRejects_negative_phone_number() { 
         assertThrows(IllegalArgumentException.class,
@@ -45,6 +50,12 @@ public class MembershipTest {
     void constructorRejects_blankAddress() {
         assertThrows(IllegalArgumentException.class,
                 () -> new Membership("Namn", 23131, 8987327, "   "));
+    }
+
+    @Test
+    void constructorRejects_nullAddress() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Membership("Namn", 12345, 888999, null));
     }
 
     @Test
