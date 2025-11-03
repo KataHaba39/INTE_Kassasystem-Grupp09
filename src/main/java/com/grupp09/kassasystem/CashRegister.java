@@ -79,6 +79,7 @@ public class CashRegister {
                     System.out.println("Continues to payment");
                     return true;
                 default:
+                    System.out.println("Error: Incorrect input, please try again!");
                     break;
             }
         } while (!itemChoice.equals("5") && !itemChoice.equals("6"));

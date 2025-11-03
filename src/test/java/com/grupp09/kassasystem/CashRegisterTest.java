@@ -139,6 +139,19 @@ public class CashRegisterTest {
     }
 
     @Test
+    void invalidInput_whenHandlingItems_doesNothing(){
+        Receipt emptyReceipt = new Receipt(customer);
+
+        provideInput("7\n5");
+
+        CashRegister.handleItems(emptyReceipt);
+
+        String output = outContent.toString();
+
+        assertTrue(output.contains("Error: Incorrect input, please try again!"));
+    }
+
+    @Test
     void payment_cancelledImmediately() {
 
         provideInput("3");
