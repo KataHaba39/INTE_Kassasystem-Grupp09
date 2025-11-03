@@ -6,6 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,6 +54,13 @@ public class CashRegisterTest {
         assertTrue(output.contains("Enter phone number"), "Should ask for phone number");
         assertTrue(output.contains("Enter mail"), "Should ask for mail");
         assertTrue(output.contains("Customer registered"), "Should confirm registration");
+    }
+
+    @Test
+    void customer_canContinueAfterRegistration(){
+        provideInput("1");
+
+        assertTrue(CashRegister.customerContinuesPurchase());
     }
 
     @Test
@@ -132,15 +140,39 @@ public class CashRegisterTest {
     }
 
     @Test
+    void invalidInput_whenHandlingItems_givesErrorMessage(){
+        Receipt emptyReceipt = new Receipt(customer);
+
+        provideInput("7\n5");
+
+        CashRegister.handleItems(emptyReceipt);
+
+        String output = outContent.toString();
+
+        assertTrue(output.contains("Error: Incorrect input, please try again!"));
+    }
+
+    @Test
     void payment_cancelledImmediately() {
 
         provideInput("3");
 
-        CashRegister.handlePayment(receipt);
+        CashRegister.handlePayment(receipt, true);
 
         String output = outContent.toString();
 
         assertTrue(output.contains("Purchase cancelled"));
+    }
+
+    @Test
+    void invalidPaymentMethod_givesErrorMessage(){
+        provideInput("4");
+
+        CashRegister.handlePayment(receipt, true);
+
+        String output = outContent.toString();
+
+        assertTrue(output.contains("Error: Choose valid payment option"));
     }
 
     @Test
@@ -149,7 +181,7 @@ public class CashRegisterTest {
 
         provideInput("1\n12.00\n");
 
-        CashRegister.handlePayment(receipt);
+        CashRegister.handlePayment(receipt, true);
 
         String output = outContent.toString();
 
@@ -163,7 +195,7 @@ public class CashRegisterTest {
 
         provideInput("1\n20.00\n");
 
-        CashRegister.handlePayment(receipt);
+        CashRegister.handlePayment(receipt, true);
 
         String output = outContent.toString();
 
@@ -177,7 +209,7 @@ public class CashRegisterTest {
 
         provideInput("1\n5.00\n");
 
-        CashRegister.handlePayment(receipt);
+        CashRegister.handlePayment(receipt, true);
 
         String output = outContent.toString();
 
@@ -190,23 +222,44 @@ public class CashRegisterTest {
 
         provideInput("2");
 
-        CashRegister.handlePayment(receipt);
+        boolean success = true;
+
+        assertTrue(CashRegister.handlePayment(receipt, success));
 
         String output = outContent.toString();
 
-        assertTrue(output.contains("Card") || output.contains("Swish") || output.contains(output));
+        assertTrue(output.contains("Payment was succesful!"));
     }
 
     @Test
     void cardOrSwishPayment_failAndCancel() {
         receipt.addItem(new FixedPriceItem("Milk", Money.toMoney(15.0d), ItemGroups.MEJERI), 1, null);
 
-        provideInput("2\nn\n");
+        provideInput("n\n");
+
+        boolean success = false;
+
+        CashRegister.handleCardOrSwishPayment(receipt, new Scanner(System.in), success);
 
         String output = outContent.toString();
 
-        assertFalse(output.contains("Payment failed!"));
-        assertFalse(output.contains("Transaction cancelled"));
+        assertTrue(output.contains("Payment failed!"));
+        assertTrue(output.contains("Transaction cancelled"));
+    }
+    
+    @Test
+    void retryUnsuccessfulPayment_retriesPayment() {
+        receipt.addItem(new FixedPriceItem("Milk", Money.toMoney(15.0d), ItemGroups.MEJERI), 1, null);
 
+        provideInput("y\nn");
+
+        boolean success = false;
+
+        assertFalse(CashRegister.handleCardOrSwishPayment(receipt, new Scanner(System.in), success));
+
+        String output = outContent.toString();
+
+        assertTrue(output.contains("Payment failed! Try again (Y/N)?"));
+        assertTrue(output.contains("Transaction cancelled"));
     }
 }

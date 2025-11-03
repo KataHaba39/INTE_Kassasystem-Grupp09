@@ -4,22 +4,6 @@ import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class CashRegister {
-    private static Receipt receipt;
-
-    public static void main(String[] args) {
-        Customer customer = registerCustomer();
-        boolean choice = customerContinuesPurchase();
-        boolean continueToPayment = false;
-
-        if (choice == true) {
-            receipt = new Receipt(customer);
-            continueToPayment = handleItems(receipt);
-        }
-
-        if (continueToPayment) {
-            handlePayment(receipt);
-        }
-    }
 
     static Customer registerCustomer() {
         Scanner input = new Scanner(System.in);
@@ -70,15 +54,16 @@ public class CashRegister {
                     break;
                 case "5":
                     System.out.println("Cancelled purchase");
-                    return false;
+                    break;
                 case "6":
                     if (receipt.getItems().isEmpty()) {
                         System.out.println("Error: Receipt must contain at least one items to continue");
-                        return false;
+                        break;
                     }
                     System.out.println("Continues to payment");
                     return true;
                 default:
+                    System.out.println("Error: Incorrect input, please try again!");
                     break;
             }
         } while (!itemChoice.equals("5") && !itemChoice.equals("6"));
@@ -95,7 +80,7 @@ public class CashRegister {
         System.out.println("6. Go to payment");
     }
 
-    static boolean handlePayment(Receipt receipt) {
+    static boolean handlePayment(Receipt receipt, boolean success) {
         Scanner input = new Scanner(System.in);
         String paymentChoice;
 
@@ -108,12 +93,13 @@ public class CashRegister {
                 case "1":
                     return handleCashPayment(receipt, input);
                 case "2":
-                    return handleCardOrSwishPayment(receipt, input);
+                    return handleCardOrSwishPayment(receipt, input, success);
                 case "3":
                     System.out.println("Purchase cancelled");
                     return false;
                 default:
-                    System.out.println("Choose valid payment option");
+                    System.out.println("Error: Choose valid payment option");
+                    return false;
             }
         } while (true);
 
@@ -151,13 +137,8 @@ public class CashRegister {
         }
     }
 
-    private static double random() {
-        return Math.random();
-    }
-
-    static boolean handleCardOrSwishPayment(Receipt receipt, Scanner input) {
+    static boolean handleCardOrSwishPayment(Receipt receipt, Scanner input, boolean success) {
         System.out.println("Processing payment");
-        boolean success = random() < 0.9;
 
         if (success) {
             PaymentMethod payment = new PaymentMethod("card", receipt.calculateTotal(), receipt.calculateTotal());
@@ -170,7 +151,7 @@ public class CashRegister {
             System.out.println("Payment failed! Try again (Y/N)?");
             String retry = input.nextLine();
             if (retry.equalsIgnoreCase("Y")) {
-                return handleCardOrSwishPayment(receipt, input);
+                return handleCardOrSwishPayment(receipt, input, success);
             } else {
                 System.out.println("Transaction cancelled.");
                 return false;
